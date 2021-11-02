@@ -27,10 +27,12 @@
     ```
 
 ## Every time setup
-1. `env2lmod`
-2. `module load gcc/6.3.0 python_gpu/3.7.4 mesa-glu/9.0.0 glfw/3.3.4 bazel/3.7.1 tmux/2.6 eth_proxy`
-3. `cd metalearning`
-4. `source ./rl/bin/activate`
+```
+env2lmod
+module load gcc/6.3.0 python_gpu/3.7.4 mesa-glu/9.0.0 glfw/3.3.4 bazel/3.7.1 tmux/2.6 eth_proxy
+cd metalearning
+source ./rl/bin/activate
+```
 
 
 ## Running a job
@@ -52,8 +54,9 @@ bjobs -w
 bjobs -l
 bpeek -f
 ```
+
 ### modules
 ```
-module ls
-module spring python            # search for modules with name pyhton
+module ls                      # list loaded modules
+module spder python            # search for modules with name pyhton
 ```
