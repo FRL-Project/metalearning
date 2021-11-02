@@ -10,8 +10,8 @@ RUN pip install --no-cache-dir -U pip && pip install --no-cache-dir -r /requirem
 RUN curl -LJO https://www.roboti.us/file/mjkey.txt
 RUN cp mjkey.txt ~/.mujoco/mjkey.txt
 
-# give wirte access to the host project folder
-# not sure if this is the right way to give write access
+# give write access to the host project folder
+# not sure if this is the right way
 USER root
 RUN mkdir /opt/project
 RUN chown $USER: /opt/project
