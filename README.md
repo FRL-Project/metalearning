@@ -6,8 +6,13 @@
 2. load modules
     ```
     module load gcc/6.3.0 python_gpu/3.7.4 tmux/2.6 eth_proxy
-    module load mesa-glu/9.0.0                                  # is this needed for mujoco?
-    module load glfw                                            # is this needed for mujoco?
+    module load mesa-glu/9.0.0                                  # is needed for mujoco
+    module load glfw                                            # is needed for mujoco
+    module load bazel                                           # needed for dm-tree if python 3.7 (garage)
+    ```
+    All in one line
+    ```
+    module load gcc/6.3.0 python_gpu/3.7.4 tmux/2.6 eth_proxy mesa-glu/9.0.0 glfw bazel
     ```
 3. Install mujoco_py dependencies
     ```
