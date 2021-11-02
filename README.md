@@ -5,9 +5,9 @@
     `env2lmod`
 2. load modules
     ```
-    module load gcc/6.3.0 python_gpu/3.8.5 tmux/2.6 eth_proxy
-    module load mesa-glu/9.0.0 # is this needed for mujoco?
-    module load glfw # is this needed for mujoco?
+    module load gcc/6.3.0 python_gpu/3.7.4 tmux/2.6 eth_proxy
+    module load mesa-glu/9.0.0                                  # is this needed for mujoco?
+    module load glfw                                            # is this needed for mujoco?
     ```
 3. Install mujoco_py dependencies
     ```
