@@ -31,6 +31,7 @@ from garage.trainer import Trainer
 @click.option('--batch_size', default=256)
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
+@click.option('--use_gpu', default=True)
 @wrap_experiment
 def pearl_metaworld_ml10(ctxt=None,
                          seed=1,
@@ -149,4 +150,4 @@ def pearl_metaworld_ml10(ctxt=None,
     trainer.train(n_epochs=num_epochs, batch_size=batch_size)
 
 
-pearl_metaworld_ml10(use_gpu=True)
+pearl_metaworld_ml10()
