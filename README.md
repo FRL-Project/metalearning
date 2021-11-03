@@ -36,12 +36,17 @@ source ./rl/bin/activate
 
 
 ## Running a job
-smaller job
+### cpu smaller job (10*3Gb)
 ```
-bsub -n 8 -J "maml-tpro" -W 4:00 -R "rusage[mem=10240, ngpus_excl_p=1]" 'python maml_trpo_metaworld_ml10.py'
+bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072]" 'python maml_trpo_metaworld_ml10.py'
 ```
 
-larger job
+### gpu smaller job (10*3Gb & any gpu)
+```
+bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072, ngpus_excl_p=1]" 'python maml_trpo_metaworld_ml10.py'
+```
+
+### gpu larger job (12*10Gb & 2080Ti)
 ```
 bsub -n 12 -J "maml-tpro" -W 4:00 -R "rusage[mem=10240, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python maml_trpo_metaworld_ml10.py'
 ```
