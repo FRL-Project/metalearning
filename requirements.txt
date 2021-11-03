@@ -1,7 +1,7 @@
 six~=1.15.0
 typing-extensions~=3.7.4
 mujoco-py<2.1,>=2.0
-numpy~=1.21.3
+numpy~=1.19.2
 click~=8.0.3
 garage~=2021.3.0
 scipy~=1.7.1
