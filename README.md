@@ -6,9 +6,11 @@
 2. Load the software modules
     ```
     module load gcc/6.3.0 python_gpu/3.7.4 tmux/2.6 eth_proxy
-    module load mesa-glu/9.0.0                                  # is needed for mujoco
-    module load glfw/3.3.4                                      # is needed for mujoco
-    module load bazel                                           # needed for dm-tree if python 3.7 (garage)
+    # is needed for mujoco
+    module load mesa-glu/9.0.0
+    module load glfw/3.3.4
+    # needed for dm-tree if python 3.7 (garage)
+    module load bazel
     ```
     all in one line
     ```
@@ -34,7 +36,6 @@ cd metalearning
 source ./rl/bin/activate
 ```
 
-
 ## Running a job
 ### cpu smaller job (10*3Gb)
 ```
@@ -46,9 +47,9 @@ bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072]" 'python maml_trpo_metawo
 bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072, ngpus_excl_p=1]" 'python maml_trpo_metaworld_ml10.py'
 ```
 
-### gpu larger job (12*10Gb & 2080Ti)
+### gpu larger job (20*4Gb & 2080Ti)
 ```
-bsub -n 12 -J "maml-tpro" -W 4:00 -R "rusage[mem=10240, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python maml_trpo_metaworld_ml10.py'
+bsub -n 20 -J "maml-tpro" -W 24:00 -R "rusage[mem=4096, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python maml_trpo_metaworld_ml10.py'
 ```
 
 ## Some useful cluster commands
