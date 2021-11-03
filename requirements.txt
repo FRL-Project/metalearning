@@ -1,5 +1,6 @@
 numpy~=1.21.3
 scipy~=1.7.1
+gym~=0.17.2
 click~=8.0.3
 six~=1.15.0
 typing-extensions~=3.7.4
