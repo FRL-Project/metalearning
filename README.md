@@ -39,17 +39,21 @@ source ./rl/bin/activate
 ## Running a job
 ### cpu smaller job (10*3Gb)
 ```
-bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072]" 'python maml_trpo_metaworld_ml10.py'
+bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072]" 'python src/maml_trpo_metaworld_ml10.py'
+```
+### cpu larger job (20*4Gb)
+```
+bsub -n 20 -J "maml-tpro" -W 24:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py'
 ```
 
 ### gpu smaller job (10*3Gb & any gpu)
 ```
-bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072, ngpus_excl_p=1]" 'python maml_trpo_metaworld_ml10.py'
+bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072, ngpus_excl_p=1]" 'python src/maml_trpo_metaworld_ml10.py'
 ```
 
 ### gpu larger job (20*4Gb & 2080Ti)
 ```
-bsub -n 20 -J "maml-tpro" -W 24:00 -R "rusage[mem=4096, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python maml_trpo_metaworld_ml10.py'
+bsub -n 20 -J "maml-tpro" -W 24:00 -R "rusage[mem=4096, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python src/maml_trpo_metaworld_ml10.py'
 ```
 
 ## Some useful cluster commands
