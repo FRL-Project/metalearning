@@ -65,3 +65,16 @@ bpeek -f
 module ls                      # list loaded modules
 module spder python            # search for modules with name pyhton
 ```
+
+
+## possible errors
+In case of the error
+```
+...
+File "mujoco_py/cymj.pyx", line 1, in init mujoco_py.cymj
+ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 88 from C header, got 80 from PyObject
+```
+reinstall mujocopy with
+```
+pip install --force-reinstall mujoco-py
+```
