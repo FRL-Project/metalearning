@@ -37,6 +37,15 @@ source ./rl/bin/activate
 ```
 
 ## Running a job
+
+List of specific commands that need the right amout of resources (check with bbjobs), to get better priority.
+
+| experiment               | epoch time | cmd                                                                                              |
+|--------------------------|---------------------------------------------------------------------------------------------------------------|
+| maml_trpo_metaworld_ml10 | 34min      |bsub -n 10 -J "maml-tpro" -W 24:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py' |
+|                          |                                                                                                               |
+
+
 ### cpu smaller job (10*3Gb)
 ```
 bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072]" 'python src/maml_trpo_metaworld_ml10.py'
