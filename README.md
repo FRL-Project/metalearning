@@ -39,7 +39,7 @@ source ./rl/bin/activate
 ## Running a job
 
 List of specific commands for the experiments.
-Commands are customized such that a job needs the right amout of resources (check with bbjobs), to get better priority; As well as fixing a gpu for reproducibility.
+Commands are customized such that a job needs the right amout of resources (check with `bbjobs`), to get better priority; As well as fixing a gpu for reproducibility.
 
 | experiment               | epoch time | cmd                                                                                                |
 |--------------------------|------------|----------------------------------------------------------------------------------------------------|
