@@ -67,14 +67,18 @@ module spder python            # search for modules with name pyhton
 ```
 
 
-## possible errors
+## Troubleshooting
 In case of the error
 ```
 ...
 File "mujoco_py/cymj.pyx", line 1, in init mujoco_py.cymj
 ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 88 from C header, got 80 from PyObject
 ```
-reinstall mujocopy with
+reinstall mujocopy with the numpy version of your liking. For instance numpy 1.19.15 is compatible with tensorflow (see https://github.com/openai/mujoco-py/issues/607).
 ```
-pip install --force-reinstall mujoco-py
+pip cache remove mujoco_py
+pip uninstall mujoco_py
+# install numpy version you like to use before installing mujoco-py
+pip install numpy==1.19.5 six~=1.15.0
+pip install mujoco-py --no-cache-dir --no-binary :all: --no-build-isolation
 ```
