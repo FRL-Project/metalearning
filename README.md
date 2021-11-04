@@ -43,7 +43,7 @@ Commands are customized such that a job needs the right amout of resources (chec
 
 | experiment               | epoch time | cmd                                                                                                |
 |--------------------------|------------|----------------------------------------------------------------------------------------------------|
-| maml_trpo_metaworld_ml10 | 34min      |`bsub -n 10 -J "maml-tpro" -W 24:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py'` |
+| maml_trpo_metaworld_ml10 | 34min      |`bsub -n 4 -J "maml-tpro" -W 24:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py'` |
 | pearl_metaworld_ml10     |            |`bsub -n 10 -J "pearl" -W 24:00 -R "rusage[mem=2048, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX1080Ti]" 'python src/pearl_metaworld_ml10.py'`                                                                                                   |
 
 
