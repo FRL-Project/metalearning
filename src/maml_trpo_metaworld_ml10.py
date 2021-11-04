@@ -25,7 +25,7 @@ from garage.trainer import Trainer
 @click.option('--epochs', default=300)
 @click.option('--episodes_per_task', default=10)
 @click.option('--meta_batch_size', default=20)
-@wrap_experiment(snapshot_mode='all')
+@wrap_experiment(snapshot_mode='last')
 def maml_trpo_metaworld_ml10(ctxt, seed, epochs, episodes_per_task,
                              meta_batch_size):
     """Set up environment and algorithm and run the task.
