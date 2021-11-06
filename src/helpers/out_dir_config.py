@@ -2,6 +2,7 @@ import os
 
 from datetime import datetime
 
+
 def get_out_dir(calling_file=''):
     # Out-dir from env var
     out_dir = os.getenv("OUT_DIR")
@@ -9,3 +10,4 @@ def get_out_dir(calling_file=''):
     date_string = datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
     new_dir = os.path.join(out_dir, date_string + "_" + exp_name)
     return new_dir
+

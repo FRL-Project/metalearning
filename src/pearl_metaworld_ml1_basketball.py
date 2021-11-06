@@ -40,25 +40,25 @@ environmentvariables.initialize()
 @click.option('--embedding_mini_batch_size', default=64)
 @click.option('--lr', default=3e-4)
 @wrap_experiment(log_dir=out_dir_config.get_out_dir(__file__), snapshot_mode='all')
-def pearl_metaworld_ml1_push(ctxt=None,
-                             seed=1,
-                             num_epochs=1000,
-                             num_train_tasks=50,
-                             latent_size=7,
-                             encoder_hidden_size=200,
-                             net_size=300,
-                             meta_batch_size=16,
-                             num_steps_per_epoch=4000,
-                             num_initial_steps=4000,
-                             num_tasks_sample=15,
-                             num_steps_prior=750,
-                             num_extra_rl_steps_posterior=750,
-                             batch_size=256,
-                             embedding_batch_size=64,
-                             embedding_mini_batch_size=64,
-                             reward_scale=10.,
-                             lr=3e-4,
-                             use_gpu=False):
+def pearl_metaworld_ml1_basketball(ctxt=None,
+                                   seed=1,
+                                   num_epochs=1000,
+                                   num_train_tasks=50,
+                                   latent_size=7,
+                                   encoder_hidden_size=200,
+                                   net_size=300,
+                                   meta_batch_size=16,
+                                   num_steps_per_epoch=4000,
+                                   num_initial_steps=4000,
+                                   num_tasks_sample=15,
+                                   num_steps_prior=750,
+                                   num_extra_rl_steps_posterior=750,
+                                   batch_size=256,
+                                   embedding_batch_size=64,
+                                   embedding_mini_batch_size=64,
+                                   reward_scale=10.,
+                                   lr=3e-4,
+                                   use_gpu=False):
     """Train PEARL with ML1 environments.
     Args:
         ctxt (garage.experiment.ExperimentContext): The experiment
@@ -164,4 +164,4 @@ def pearl_metaworld_ml1_push(ctxt=None,
     trainer.train(n_epochs=num_epochs, batch_size=batch_size)
 
 
-pearl_metaworld_ml1_push()
+pearl_metaworld_ml1_basketball()
