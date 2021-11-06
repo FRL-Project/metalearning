@@ -2,7 +2,9 @@
 """PEARL ML1 example."""
 import click
 import metaworld
+import os
 
+from helpers import environmentvariables
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv, normalize
 from garage.experiment.deterministic import set_seed
@@ -17,6 +19,8 @@ from garage.torch.policies import (ContextConditionedPolicy,
 from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
 
+#Init env. variables
+environmentvariables.initialize()
 
 @click.command()
 @click.option('--num_epochs', default=1000)
@@ -30,7 +34,7 @@ from garage.trainer import Trainer
 @click.option('--batch_size', default=256)
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
-@wrap_experiment
+@wrap_experiment(log_dir=os.getenv("OUT_DIR"))
 def pearl_metaworld_ml1_push(ctxt=None,
                              seed=1,
                              num_epochs=1000,

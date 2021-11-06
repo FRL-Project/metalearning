@@ -5,7 +5,9 @@
 import click
 import metaworld
 import torch
+import os
 
+from helpers import environmentvariables
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv, normalize
 from garage.experiment import (MetaEvaluator, MetaWorldTaskSampler,
@@ -19,13 +21,15 @@ from garage.trainer import Trainer
 
 # yapf: enable
 
+#Init env. variables
+environmentvariables.initialize()
 
 @click.command()
 @click.option('--seed', default=1)
 @click.option('--epochs', default=300)
 @click.option('--episodes_per_task', default=45)
 @click.option('--meta_batch_size', default=45)
-@wrap_experiment(snapshot_mode='all')
+@wrap_experiment(snapshot_mode='all', log_dir=os.getenv("OUT_DIR"))
 def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
                              meta_batch_size):
     """Set up environment and algorithm and run the task.
