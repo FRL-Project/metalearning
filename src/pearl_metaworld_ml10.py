@@ -50,7 +50,8 @@ def pearl_metaworld_ml10(ctxt=None,
                          embedding_batch_size=64,
                          embedding_mini_batch_size=64,
                          reward_scale=10.,
-                         use_gpu=False):
+                         use_gpu=False,
+                         lr=3E-4):
     """Train PEARL with ML10 environments.
     Args:
         ctxt (garage.experiment.ExperimentContext): The experiment
@@ -82,6 +83,7 @@ def pearl_metaworld_ml10(ctxt=None,
             encoder.
         reward_scale (int): Reward scale.
         use_gpu (bool): Whether or not to use GPU for training.
+        lr (float): Learning rate for the policy, q-,v-function and context.
     """
     set_seed(seed)
     encoder_hidden_sizes = (encoder_hidden_size, encoder_hidden_size,
@@ -129,6 +131,10 @@ def pearl_metaworld_ml10(ctxt=None,
         latent_dim=latent_size,
         encoder_hidden_sizes=encoder_hidden_sizes,
         test_env_sampler=test_env_sampler,
+        policy_lr=lr,
+        qf_lr=lr,
+        vf_lr=lr,
+        context_lr=lr,
         meta_batch_size=meta_batch_size,
         num_steps_per_epoch=num_steps_per_epoch,
         num_initial_steps=num_initial_steps,
