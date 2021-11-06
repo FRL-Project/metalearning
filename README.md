@@ -27,6 +27,10 @@
     source ./rl/bin/activate
     pip install -r ./requirements.txt
     ```
+5. Add .env file in root directory and paste following content:
+    ```
+    OUT_DIR=/cluster/scratch/<username>
+    ```
 
 ## Every time setup
 ```
