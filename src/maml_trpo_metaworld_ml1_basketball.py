@@ -31,9 +31,13 @@ environmentvariables.initialize()
 @click.option('--epochs', default=300)
 @click.option('--rollouts_per_task', default=10)
 @click.option('--meta_batch_size', default=20)
+@click.option('--inner_lr', default=0.1)
+@click.option('--outer_lr', default=1e-3)
 @wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
 def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
-                                       meta_batch_size):
+                                       meta_batch_size,
+                                       inner_lr,
+                                       outer_lr):
     """Set up environment and algorithm and run the task.
     Args:
         ctxt (garage.experiment.ExperimentContext): The experiment
@@ -44,6 +48,8 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
         rollouts_per_task (int): Number of rollouts per epoch per task
             for training.
         meta_batch_size (int): Number of tasks sampled per batch.
+        inner_lr (float): Adaptation learning rate.
+        outer_lr (float): Meta policy learning rate.
     """
     set_seed(seed)
 
@@ -83,7 +89,8 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
                     meta_batch_size=meta_batch_size,
                     discount=0.99,
                     gae_lambda=1.,
-                    inner_lr=0.1,
+                    inner_lr=inner_lr,
+                    outer_lr=outer_lr,
                     num_grad_updates=1,
                     meta_evaluator=meta_evaluator)
 
