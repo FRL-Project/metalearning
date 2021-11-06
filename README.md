@@ -98,9 +98,9 @@ Commands are customized such that a job needs the right amout of resources (chec
 
 | experiment               |cmd                                                                                                                   | state |
 |--------------------------|----------------------------------------------------------------------------------------------------------------------|-------|
-| lr=7e-4                  | `bsub -n 4 -J "pearl-7e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 7e-4'` |
-| lr=3e-4 default          | `bsub -n 4 -J "pearl-3e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 3e-4'` |
-| lr=1e-4                  | `bsub -n 4 -J "pearl-1e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 1e-4'` |
+| lr=7e-4                  | `bsub -n 4 -J "pearl-ml1-7e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 7e-4'` |
+| lr=3e-4 default          | `bsub -n 4 -J "pearl-ml1-3e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 3e-4'` |
+| lr=1e-4                  | `bsub -n 4 -J "pearl-ml1-1e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 1e-4'` |
 
 ### cpu smaller job (10*3Gb)
 ```
