@@ -5,7 +5,9 @@ import click
 import metaworld
 import os
 
+from datetime import datetime
 from helpers import environmentvariables
+from helpers import out_dir_config
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv, normalize
 from garage.experiment.deterministic import set_seed
@@ -37,7 +39,7 @@ environmentvariables.initialize()
 @click.option('--embedding_mini_batch_size', default=64)
 @click.option('--use_gpu', default=True)
 @click.option('--lr', default=3e-4)
-@wrap_experiment(snapshot_mode='all', log_dir=os.getenv("OUT_DIR"))
+@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
 def pearl_metaworld_ml10(ctxt=None,
                          seed=1,
                          num_epochs=1000,

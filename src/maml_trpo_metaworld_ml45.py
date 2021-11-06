@@ -7,7 +7,9 @@ import metaworld
 import torch
 import os
 
+from datetime import datetime
 from helpers import environmentvariables
+from helpers import out_dir_config
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv, normalize
 from garage.experiment import (MetaEvaluator, MetaWorldTaskSampler,
@@ -29,7 +31,7 @@ environmentvariables.initialize()
 @click.option('--epochs', default=300)
 @click.option('--episodes_per_task', default=45)
 @click.option('--meta_batch_size', default=45)
-@wrap_experiment(snapshot_mode='all', log_dir=os.getenv("OUT_DIR"))
+@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
 def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
                              meta_batch_size):
     """Set up environment and algorithm and run the task.
