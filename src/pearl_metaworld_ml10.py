@@ -37,7 +37,7 @@ environmentvariables.initialize()
 @click.option('--batch_size', default=256)
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
-@click.option('--use_gpu', default=True)
+@click.option('--use_gpu', default=False)
 @click.option('--lr', default=3e-4)
 @wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
 def pearl_metaworld_ml10(ctxt=None,
@@ -57,7 +57,7 @@ def pearl_metaworld_ml10(ctxt=None,
                          embedding_batch_size=64,
                          embedding_mini_batch_size=64,
                          reward_scale=10.,
-                         lr=3E-4,
+                         lr=3e-4,
                          use_gpu=False):
     """Train PEARL with ML10 environments.
     Args:
