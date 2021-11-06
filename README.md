@@ -54,7 +54,7 @@ Commands are customized such that a job needs the right amout of resources (chec
 | pearl_metaworld_ml10     |            |`bsub -n 4 -J "pearl" -W 24:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml10.py'`|
 | pearl_metaworld_ml10 gpu |            |`bsub -n 10 -J "pearl" -W 24:00 -R "rusage[mem=2048, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX1080Ti]" 'python src/pearl_metaworld_ml10.py' --use_gpu True`|
 
-#### hyperparameter MAML ML10
+#### hyperparameter MAML ML10 (Jona)
 
 | experiment               |cmd                                                                                                 |
 |--------------------------|----------------------------------------------------------------------------------------------------|
@@ -65,7 +65,7 @@ Commands are customized such that a job needs the right amout of resources (chec
 | inner_lr=0.05            | `bsub -n 4 -J "maml-in-0.05" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.05'` |
 | inner_lr=0.01            | `bsub -n 4 -J "maml-in-0.01" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.01'` |
 
-#### hyperparameter MAML ML45
+#### hyperparameter MAML ML45 (Andreas)
 
 | experiment               |cmd                                                                                                 |
 |--------------------------|----------------------------------------------------------------------------------------------------|
@@ -76,7 +76,7 @@ Commands are customized such that a job needs the right amout of resources (chec
 | inner_lr=0.05            | `bsub -n 4 -J "maml45-in-0.05" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --inner_lr 0.05'` |
 | inner_lr=0.01            | `bsub -n 4 -J "maml45-in-0.01" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --inner_lr 0.01'` |
 
-#### hyperparameter PEARL ML10
+#### hyperparameter PEARL ML10 (Jona)
 
 | experiment               |cmd                                                                                                         |
 |--------------------------|------------------------------------------------------------------------------------------------------------|
