@@ -94,6 +94,14 @@ Commands are customized such that a job needs the right amout of resources (chec
 | lr=3e-4 default          | `bsub -n 4 -J "pearl-3e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml10.py --lr 3e-4'` |
 | lr=1e-4                  | `bsub -n 4 -J "pearl-1e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml10.py --lr 1e-4'` |
 
+#### hyperparameter PEARL ML1 - Basketball-v2 (Jona)
+
+| experiment               |cmd                                                                                                                   |
+|--------------------------|----------------------------------------------------------------------------------------------------------------------|
+| lr=7e-4                  | `bsub -n 4 -J "pearl-7e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 7e-4'` |
+| lr=3e-4 default          | `bsub -n 4 -J "pearl-3e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 3e-4'` |
+| lr=1e-4                  | `bsub -n 4 -J "pearl-1e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py --lr 1e-4'` |
+
 ### cpu smaller job (10*3Gb)
 ```
 bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072]" 'python src/maml_trpo_metaworld_ml10.py'
