@@ -26,8 +26,8 @@ from garage.trainer import Trainer
 @click.option('--rollouts_per_task', default=10)
 @click.option('--meta_batch_size', default=20)
 @wrap_experiment(snapshot_mode='gap_and_last', snapshot_gap=10)
-def maml_trpo_metaworld_ml1_push(ctxt, seed, epochs, rollouts_per_task,
-                                 meta_batch_size):
+def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
+                                       meta_batch_size):
     """Set up environment and algorithm and run the task.
     Args:
         ctxt (garage.experiment.ExperimentContext): The experiment
@@ -41,7 +41,7 @@ def maml_trpo_metaworld_ml1_push(ctxt, seed, epochs, rollouts_per_task,
     """
     set_seed(seed)
 
-    ml1 = metaworld.ML1('push-v2')
+    ml1 = metaworld.ML1('basketball-v2')
     tasks = MetaWorldTaskSampler(ml1, 'train')
     env = tasks.sample(1)[0]()
     test_sampler = SetTaskSampler(MetaWorldSetTaskEnv,
@@ -83,9 +83,7 @@ def maml_trpo_metaworld_ml1_push(ctxt, seed, epochs, rollouts_per_task,
 
     trainer.setup(algo, env)
     trainer.train(n_epochs=epochs,
-                  batch_size=rollouts_per_task * env.spec.max_episode_length,
-                  plot=True,
-                  pause_for_plot=True)
+                  batch_size=rollouts_per_task * env.spec.max_episode_length)
 
 
-maml_trpo_metaworld_ml1_push()
+maml_trpo_metaworld_ml1_basketball()
