@@ -65,6 +65,17 @@ Commands are customized such that a job needs the right amout of resources (chec
 | inner_lr=0.05            | `bsub -n 4 -J "maml-in-0.05" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.05'` |
 | inner_lr=0.01            | `bsub -n 4 -J "maml-in-0.01" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.01'` |
 
+#### hyperparameter MAML ML45
+
+| experiment               |cmd                                                                                                 |
+|--------------------------|----------------------------------------------------------------------------------------------------|
+| outer_lr=5e-3            | `bsub -n 4 -J "maml45-5e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --outer_lr 5e-3'` |
+| outer_lr=1e-3 default    | `bsub -n 4 -J "maml45-1e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --outer_lr 1e-3'` |
+| outer_lr=5e-4            | `bsub -n 4 -J "maml45-5e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --outer_lr 5e-4'` |
+| inner_lr=0.1 default     | `bsub -n 4 -J "maml45-in-0.1" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --inner_lr 0.1'`  |
+| inner_lr=0.05            | `bsub -n 4 -J "maml45-in-0.05" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --inner_lr 0.05'` |
+| inner_lr=0.01            | `bsub -n 4 -J "maml45-in-0.01" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py --inner_lr 0.01'` |
+
 #### hyperparameter PEARL ML10
 
 | experiment               |cmd                                                                                                         |
