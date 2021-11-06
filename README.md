@@ -43,10 +43,31 @@ Commands are customized such that a job needs the right amout of resources (chec
 
 | experiment               | epoch time | cmd                                                                                                |
 |--------------------------|------------|----------------------------------------------------------------------------------------------------|
-| maml_trpo_metaworld_ml10 | 34min      |`bsub -n 4 -J "maml-tpro" -W 24:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py'` |
+| maml_trpo_metaworld_ml1_basketball |       |`bsub -n 4 -J "maml-tpro" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml1_basketball.py'` |
+| maml_trpo_metaworld_ml10 | 35min      |`bsub -n 4 -J "maml-tpro" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py'` |
 | maml_trpo_metaworld_ml45 | 50min      |`bsub -n 15 -J "maml-tpro" -W 24:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml45.py'` |
-| pearl_metaworld_ml10     |            |`bsub -n 10 -J "pearl" -W 24:00 -R "rusage[mem=2048, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX1080Ti]" 'python src/pearl_metaworld_ml10.py'`                                                                                                   |
+| pearl_metaworld_ml1_basketball |            |`bsub -n 4 -J "pearl" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml1_basketball.py'`|
+| pearl_metaworld_ml10     |            |`bsub -n 4 -J "pearl" -W 24:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml10.py'`|
+| pearl_metaworld_ml10 gpu |            |`bsub -n 10 -J "pearl" -W 24:00 -R "rusage[mem=2048, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX1080Ti]" 'python src/pearl_metaworld_ml10.py' --use_gpu True`|
 
+#### hyperparameter MAML ML10
+
+| experiment               |cmd                                                                                                 |
+|--------------------------|----------------------------------------------------------------------------------------------------|
+| outer_lr=5e-3            | `bsub -n 4 -J "maml-5e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-3'` |
+| outer_lr=1e-3 default    | `bsub -n 4 -J "maml-1e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 1e-3'` |
+| outer_lr=5e-4            | `bsub -n 4 -J "maml-5e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-4'` |
+| inner_lr=0.1 default     | `bsub -n 4 -J "maml-in-0.1" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.1'`  |
+| inner_lr=0.05            | `bsub -n 4 -J "maml-in-0.05" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.05'` |
+| inner_lr=0.01            | `bsub -n 4 -J "maml-in-0.01" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.01'` |
+
+#### hyperparameter PEARL ML10
+
+| experiment               |cmd                                                                                                         |
+|--------------------------|------------------------------------------------------------------------------------------------------------|
+| lr=7e-4                  | `bsub -n 4 -J "pearl-7e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml10.py --lr 7e-4'` |
+| lr=3e-4 default          | `bsub -n 4 -J "pearl-3e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml10.py --lr 3e-4'` |
+| lr=1e-4                  | `bsub -n 4 -J "pearl-1e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/pearl_metaworld_ml10.py --lr 1e-4'` |
 
 ### cpu smaller job (10*3Gb)
 ```

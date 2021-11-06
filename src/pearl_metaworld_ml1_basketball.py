@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """PEARL ML1 example."""
+import os
+
 import click
 import metaworld
 import os
@@ -34,7 +36,7 @@ environmentvariables.initialize()
 @click.option('--batch_size', default=256)
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
-@wrap_experiment(log_dir=os.getenv("OUT_DIR"))
+@wrap_experiment(log_dir=os.getenv("OUT_DIR"), snapshot_mode='all')
 def pearl_metaworld_ml1_push(ctxt=None,
                              seed=1,
                              num_epochs=1000,
