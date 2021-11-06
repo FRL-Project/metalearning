@@ -17,6 +17,7 @@ from garage.torch.policies import GaussianMLPPolicy
 from garage.torch.value_functions import GaussianMLPValueFunction
 from garage.trainer import Trainer
 
+
 # yapf: enable
 
 
@@ -25,9 +26,13 @@ from garage.trainer import Trainer
 @click.option('--epochs', default=300)
 @click.option('--episodes_per_task', default=10)
 @click.option('--meta_batch_size', default=20)
+@click.option('--inner_lr', default=0.1)
+@click.option('--outer_lr', default=1e-3)
 @wrap_experiment(snapshot_mode='all')
 def maml_trpo_metaworld_ml10(ctxt, seed, epochs, episodes_per_task,
-                             meta_batch_size):
+                             meta_batch_size,
+                             inner_lr,
+                             outer_lr):
     """Set up environment and algorithm and run the task.
     Args:
         ctxt (ExperimentContext): The experiment configuration used by
@@ -38,6 +43,8 @@ def maml_trpo_metaworld_ml10(ctxt, seed, epochs, episodes_per_task,
         episodes_per_task (int): Number of episodes per epoch per task
             for training.
         meta_batch_size (int): Number of tasks sampled per batch.
+        inner_lr (float): Adaptation learning rate.
+        outer_lr (float): Meta policy learning rate.
     """
     set_seed(seed)
     ml10 = metaworld.ML10()
@@ -74,7 +81,8 @@ def maml_trpo_metaworld_ml10(ctxt, seed, epochs, episodes_per_task,
                     meta_batch_size=meta_batch_size,
                     discount=0.99,
                     gae_lambda=1.,
-                    inner_lr=0.1,
+                    inner_lr=inner_lr,
+                    outer_lr=outer_lr,
                     num_grad_updates=1,
                     meta_evaluator=meta_evaluator)
 
