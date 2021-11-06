@@ -31,7 +31,8 @@ from garage.trainer import Trainer
 @click.option('--batch_size', default=256)
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
-@click.option('--use_gpu', default=True)
+@click.option('--lr', default=3e-4)
+@click.option('--use_gpu', default=False)
 @wrap_experiment(snapshot_mode='all')
 def pearl_metaworld_ml10(ctxt=None,
                          seed=1,
@@ -50,8 +51,8 @@ def pearl_metaworld_ml10(ctxt=None,
                          embedding_batch_size=64,
                          embedding_mini_batch_size=64,
                          reward_scale=10.,
-                         use_gpu=False,
-                         lr=3E-4):
+                         lr=3E-4,
+                         use_gpu=False):
     """Train PEARL with ML10 environments.
     Args:
         ctxt (garage.experiment.ExperimentContext): The experiment
@@ -82,8 +83,8 @@ def pearl_metaworld_ml10(ctxt=None,
             batch; should be same as embedding_batch_size for non-recurrent
             encoder.
         reward_scale (int): Reward scale.
-        use_gpu (bool): Whether or not to use GPU for training.
         lr (float): Learning rate for the policy, q-,v-function and context.
+        use_gpu (bool): Whether or not to use GPU for training.
     """
     set_seed(seed)
     encoder_hidden_sizes = (encoder_hidden_size, encoder_hidden_size,
