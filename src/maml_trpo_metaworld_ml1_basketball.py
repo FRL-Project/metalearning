@@ -25,7 +25,7 @@ from garage.trainer import Trainer
 @click.option('--epochs', default=300)
 @click.option('--rollouts_per_task', default=10)
 @click.option('--meta_batch_size', default=20)
-@wrap_experiment(snapshot_mode='gap_and_last', snapshot_gap=10)
+@wrap_experiment(snapshot_mode='all')
 def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
                                        meta_batch_size):
     """Set up environment and algorithm and run the task.

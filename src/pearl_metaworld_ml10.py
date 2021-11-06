@@ -32,7 +32,7 @@ from garage.trainer import Trainer
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
 @click.option('--use_gpu', default=True)
-@wrap_experiment(snapshot_mode='gap_and_last', snapshot_gap=10)
+@wrap_experiment(snapshot_mode='all')
 def pearl_metaworld_ml10(ctxt=None,
                          seed=1,
                          num_epochs=1000,
