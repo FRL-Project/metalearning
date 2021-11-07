@@ -39,6 +39,7 @@ environmentvariables.initialize()
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
 @click.option('--lr', default=3e-4)
+@click.option('--use_gpu', default=False)
 @wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__), archive_launch_repo=False)
 def pearl_metaworld_ml1_basketball(ctxt=None,
                                    seed=1,
