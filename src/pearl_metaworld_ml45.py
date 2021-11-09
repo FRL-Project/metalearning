@@ -3,7 +3,11 @@
 
 import click
 import metaworld
+import os
 
+from datetime import datetime
+from helpers import environmentvariables
+from helpers import out_dir_config
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv, normalize
 from garage.experiment.deterministic import set_seed
@@ -18,6 +22,8 @@ from garage.torch.policies import (ContextConditionedPolicy,
 from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
 
+#Init env. variables
+environmentvariables.initialize()
 
 @click.command()
 @click.option('--num_epochs', default=1000)
@@ -31,7 +37,9 @@ from garage.trainer import Trainer
 @click.option('--batch_size', default=256)
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
-@wrap_experiment
+@click.option('--lr', default=3e-4)
+@click.option('--use_gpu', defaut=False)
+@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__), archive_launch_repo=False)
 def pearl_metaworld_ml45(ctxt=None,
                          seed=1,
                          num_epochs=1000,
