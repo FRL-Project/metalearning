@@ -37,9 +37,9 @@ environmentvariables.initialize()
 @click.option('--batch_size', default=256)
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
-@click.option('--use_gpu', default=False)
 @click.option('--lr', default=3e-4)
-@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
+@click.option('--use_gpu', default=False)
+@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__), archive_launch_repo=False)
 def pearl_metaworld_ml10(ctxt=None,
                          seed=1,
                          num_epochs=1000,
