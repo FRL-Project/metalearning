@@ -102,6 +102,14 @@ Commands are customized such that a job needs the right amout of resources (chec
 | lr=3e-4 default          | `bsub -n 4 -J "pearl-ml1-3e-4" -W 300:00 -R "rusage[mem=4096,ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python src/pearl_metaworld_ml1_basketball.py --lr 3e-4 --use_gpu True'` | run |
 | lr=1e-4                  | `bsub -n 4 -J "pearl-ml1-1e-4" -W 300:00 -R "rusage[mem=4096,ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python src/pearl_metaworld_ml1_basketball.py --lr 1e-4 --use_gpu True'` | run |
 
+#### hyperparameter PEARL ML45 (Andreas)
+
+| experiment               |cmd                                                                                                         | state |
+|--------------------------|------------------------------------------------------------------------------------------------------------|-------|
+| lr=7e-4                  | `bsub -n 20 -J "pearl-ml45-7e-4" -W 300:00 -R "rusage[mem=4096, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python src/pearl_metaworld_ml45.py --lr 7e-4 --use_gpu True'` | |
+| lr=3e-4 default          | `bsub -n 20 -J "pearl-ml45-3e-4" -W 300:00 -R "rusage[mem=4096, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python src/pearl_metaworld_ml45.py --lr 3e-4 --use_gpu True'` | |
+| lr=1e-4                  | `bsub -n 20 -J "pearl-ml45-1e-4" -W 300:00 -R "rusage[mem=4096, ngpus_excl_p=1]" -R "select[gpu_model0==GeForceRTX2080Ti]" 'python src/pearl_metaworld_ml45.py --lr 1e-4 --use_gpu True'` | |
+
 ### cpu smaller job (10*3Gb)
 ```
 bsub -n 10 -J "maml-tpro" -W 4:00 -R "rusage[mem=3072]" 'python src/maml_trpo_metaworld_ml10.py'
