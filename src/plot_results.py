@@ -11,6 +11,7 @@ from tensorboard.backend.event_processing.event_accumulator import EventAccumula
 mpl.rcParams['font.family'] = 'STIXGeneral'
 mpl.rcParams['font.size'] = 18
 mpl.rcParams['mathtext.fontset'] = 'stix'
+mpl.rcParams['figure.figsize'] = (8, 5)
 
 
 def plot_tensorflow_log(log_file_path_list, legend_names, fname, out_path="../figures"):
@@ -27,8 +28,6 @@ def plot_tensorflow_log(log_file_path_list, legend_names, fname, out_path="../fi
         test_avg_return = event_acc.Scalars('MetaTest/Average/AverageReturn')
         max_epochs = max(max_epochs, len(test_avg_return))
         test_avg_return_list.append(test_avg_return)
-
-    fig = plt.figure(1, figsize=(8, 5))
 
     for avg_return, legend in zip(test_avg_return_list, legend_names):
         steps = len(avg_return)
