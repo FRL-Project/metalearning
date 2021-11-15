@@ -38,7 +38,7 @@ environmentvariables.initialize()
 @click.option('--embedding_batch_size', default=64)
 @click.option('--embedding_mini_batch_size', default=64)
 @click.option('--lr', default=3e-4)
-@click.option('--use_gpu', defaut=False)
+@click.option('--use_gpu', default=False)
 @wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__), archive_launch_repo=False)
 def pearl_metaworld_ml45(ctxt=None,
                          seed=1,
@@ -57,6 +57,7 @@ def pearl_metaworld_ml45(ctxt=None,
                          embedding_batch_size=64,
                          embedding_mini_batch_size=64,
                          reward_scale=10.,
+                         lr=3e-4,
                          use_gpu=False):
     """Train PEARL with ML45 environments.
 
@@ -89,6 +90,7 @@ def pearl_metaworld_ml45(ctxt=None,
             batch; should be same as embedding_batch_size for non-recurrent
             encoder.
         reward_scale (int): Reward scale.
+        lr (float): Learning rate for the policy, q-,v-function and context.
         use_gpu (bool): Whether or not to use GPU for training.
 
     """
@@ -138,6 +140,10 @@ def pearl_metaworld_ml45(ctxt=None,
         latent_dim=latent_size,
         encoder_hidden_sizes=encoder_hidden_sizes,
         test_env_sampler=test_env_sampler,
+        policy_lr=lr,
+        qf_lr=lr,
+        vf_lr=lr,
+        context_lr=lr,
         meta_batch_size=meta_batch_size,
         num_steps_per_epoch=num_steps_per_epoch,
         num_initial_steps=num_initial_steps,
