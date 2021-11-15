@@ -56,6 +56,7 @@ if __name__ == '__main__':
     log_path = "../experiments/ml10/maml_trpo"
     out_file_name = "maml_trpo_outer_lr"
     dirs = [directory for directory in os.listdir(log_path) if os.path.isdir(os.path.join(log_path, directory))]
+    dirs.sort()
 
     log_file_path_list = list()
     folder_names = list()
