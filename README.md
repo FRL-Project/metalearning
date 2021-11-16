@@ -68,9 +68,11 @@ Commands are customized such that a job needs the right amout of resources (chec
 
 | experiment               |cmd                                                                                                 | state |
 |--------------------------|----------------------------------------------------------------------------------------------------|-------|
+| outer_lr=1e-2            | `bsub -n 4 -J "maml-ml10-1e-2" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 1e-2'` |run |
 | outer_lr=5e-3            | `bsub -n 4 -J "maml-ml10-5e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-3'` |run |
 | outer_lr=1e-3 default    | `bsub -n 4 -J "maml-ml10-1e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 1e-3'` |run |
 | outer_lr=5e-4            | `bsub -n 4 -J "maml-ml10-5e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-4'` |run |
+| inner_lr=0.5             | `bsub -n 4 -J "maml-ml10-in-0.5" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.5'`  |
 | inner_lr=0.1 default     | `bsub -n 4 -J "maml-ml10-in-0.1" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.1'`  |
 | inner_lr=0.05            | `bsub -n 4 -J "maml-ml10-in-0.05" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.05'` |
 | inner_lr=0.01            | `bsub -n 4 -J "maml-ml10-in-0.01" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.01'` |
