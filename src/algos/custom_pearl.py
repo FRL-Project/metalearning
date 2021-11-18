@@ -19,6 +19,8 @@ from garage.torch import global_device
 from garage.torch.embeddings import MLPEncoder
 from garage.torch.policies import ContextConditionedPolicy
 
+from experiment.custom_meta_evaluator import CustomMetaEvaluator
+
 
 class PEARL(MetaRLAlgorithm):
     r"""A PEARL model based on https://arxiv.org/abs/1903.08254.
@@ -177,10 +179,10 @@ class PEARL(MetaRLAlgorithm):
                              'test_env_sampler.n_tasks is None')
 
         worker_args = dict(deterministic=True, accum_context=True)
-        self._evaluator = MetaEvaluator(test_task_sampler=test_env_sampler,
-                                        worker_class=PEARLWorker,
-                                        worker_args=worker_args,
-                                        n_test_tasks=num_test_tasks)
+        self._evaluator = CustomMetaEvaluator(test_task_sampler=test_env_sampler,
+                                              worker_class=PEARLWorker,
+                                              worker_args=worker_args,
+                                              n_test_tasks=num_test_tasks)
 
         encoder_spec = self.get_env_spec(self._single_env, latent_dim,
                                          'encoder')
