@@ -28,12 +28,12 @@ environmentvariables.initialize()
 @click.command()
 @click.option('--seed', default=1)
 @click.option('--epochs', default=300)
-@click.option('--rollouts_per_task', default=10)
+@click.option('--episodes_per_task', default=10)
 @click.option('--meta_batch_size', default=20)
 @click.option('--inner_lr', default=0.1)
 @click.option('--outer_lr', default=1e-3)
 @wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
-def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
+def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, episodes_per_task,
                                        meta_batch_size,
                                        inner_lr,
                                        outer_lr):
@@ -44,7 +44,7 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
         seed (int): Used to seed the random number generator to produce
             determinism.
         epochs (int): Number of training epochs.
-        rollouts_per_task (int): Number of rollouts per epoch per task
+        episodes_per_task (int): Number of rollouts per epoch per task
             for training.
         meta_batch_size (int): Number of tasks sampled per batch.
         inner_lr (float): Adaptation learning rate.
@@ -72,7 +72,7 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
 
     meta_evaluator = CustomMetaEvaluator(test_task_sampler=test_sampler,
                                          n_test_tasks=1,
-                                         n_exploration_eps=rollouts_per_task)
+                                         n_exploration_eps=episodes_per_task)
 
     sampler = RaySampler(agents=policy,
                          envs=env,
@@ -95,7 +95,7 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
 
     trainer.setup(algo, env)
     trainer.train(n_epochs=epochs,
-                  batch_size=rollouts_per_task * env.spec.max_episode_length)
+                  batch_size=episodes_per_task * env.spec.max_episode_length)
 
 
 maml_trpo_metaworld_ml1_basketball()
