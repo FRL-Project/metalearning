@@ -10,7 +10,6 @@ function, and a rollout function.
 from collections import defaultdict
 import itertools
 
-import click
 import cloudpickle
 import psutil
 import ray
@@ -176,40 +175,38 @@ class CustomRaySampler(Sampler):
         idle_worker_ids = []
         updating_workers = self._update_workers(agent_update, env_update)
 
-        with click.progressbar(length=num_samples, label='Sampling') as pbar:
-            while completed_samples < num_samples:
-                # if there are workers still being updated, check
-                # which ones are still updating and take the workers that
-                # are done updating, and start collecting episodes on those
-                # workers.
-                if updating_workers:
-                    updated, updating_workers = ray.wait(updating_workers,
-                                                         num_returns=1,
-                                                         timeout=0.1)
-                    upd = [ray.get(up) for up in updated]
-                    idle_worker_ids.extend(upd)
+        while completed_samples < num_samples:
+            # if there are workers still being updated, check
+            # which ones are still updating and take the workers that
+            # are done updating, and start collecting episodes on those
+            # workers.
+            if updating_workers:
+                updated, updating_workers = ray.wait(updating_workers,
+                                                     num_returns=1,
+                                                     timeout=0.1)
+                upd = [ray.get(up) for up in updated]
+                idle_worker_ids.extend(upd)
 
-                # if there are idle workers, use them to collect episodes and
-                # mark the newly busy workers as active
-                while idle_worker_ids:
-                    idle_worker_id = idle_worker_ids.pop()
-                    worker = self._all_workers[idle_worker_id]
-                    active_workers.append(worker.rollout.remote())
+            # if there are idle workers, use them to collect episodes and
+            # mark the newly busy workers as active
+            while idle_worker_ids:
+                idle_worker_id = idle_worker_ids.pop()
+                worker = self._all_workers[idle_worker_id]
+                active_workers.append(worker.rollout.remote())
 
-                # check which workers are done/not done collecting a sample
-                # if any are done, send them to process the collected
-                # episode if they are not, keep checking if they are done
-                ready, not_ready = ray.wait(active_workers,
-                                            num_returns=1,
-                                            timeout=0.001)
-                active_workers = not_ready
-                for result in ready:
-                    ready_worker_id, episode_batch = ray.get(result)
-                    idle_worker_ids.append(ready_worker_id)
-                    num_returned_samples = episode_batch.lengths.sum()
-                    completed_samples += num_returned_samples
-                    batches.append(episode_batch)
-                    pbar.update(num_returned_samples)
+            # check which workers are done/not done collecting a sample
+            # if any are done, send them to process the collected
+            # episode if they are not, keep checking if they are done
+            ready, not_ready = ray.wait(active_workers,
+                                        num_returns=1,
+                                        timeout=0.001)
+            active_workers = not_ready
+            for result in ready:
+                ready_worker_id, episode_batch = ray.get(result)
+                idle_worker_ids.append(ready_worker_id)
+                num_returned_samples = episode_batch.lengths.sum()
+                completed_samples += num_returned_samples
+                batches.append(episode_batch)
 
         samples = EpisodeBatch.concatenate(*batches)
         self.total_env_steps += sum(samples.lengths)
@@ -247,44 +244,40 @@ class CustomRaySampler(Sampler):
         idle_worker_ids = []
         updating_workers = self._update_workers(agent_update, env_update)
 
-        with click.progressbar(length=self._worker_factory.n_workers,
-                               label='Sampling') as pbar:
-            while any(
-                    len(episodes[i]) < n_eps_per_worker
-                    for i in range(self._worker_factory.n_workers)):
-                # if there are workers still being updated, check
-                # which ones are still updating and take the workers that
-                # are done updating, and start collecting episodes on
-                # those workers.
-                if updating_workers:
-                    updated, updating_workers = ray.wait(updating_workers,
-                                                         num_returns=1,
-                                                         timeout=0.1)
-                    upd = [ray.get(up) for up in updated]
-                    idle_worker_ids.extend(upd)
+        while any(
+                len(episodes[i]) < n_eps_per_worker
+                for i in range(self._worker_factory.n_workers)):
+            # if there are workers still being updated, check
+            # which ones are still updating and take the workers that
+            # are done updating, and start collecting episodes on
+            # those workers.
+            if updating_workers:
+                updated, updating_workers = ray.wait(updating_workers,
+                                                     num_returns=1,
+                                                     timeout=0.1)
+                upd = [ray.get(up) for up in updated]
+                idle_worker_ids.extend(upd)
 
-                # if there are idle workers, use them to collect episodes
-                # mark the newly busy workers as active
-                while idle_worker_ids:
-                    idle_worker_id = idle_worker_ids.pop()
-                    worker = self._all_workers[idle_worker_id]
-                    active_workers.append(worker.rollout.remote())
+            # if there are idle workers, use them to collect episodes
+            # mark the newly busy workers as active
+            while idle_worker_ids:
+                idle_worker_id = idle_worker_ids.pop()
+                worker = self._all_workers[idle_worker_id]
+                active_workers.append(worker.rollout.remote())
 
-                # check which workers are done/not done collecting a sample
-                # if any are done, send them to process the collected episode
-                # if they are not, keep checking if they are done
-                ready, not_ready = ray.wait(active_workers,
-                                            num_returns=1,
-                                            timeout=0.001)
-                active_workers = not_ready
-                for result in ready:
-                    ready_worker_id, episode_batch = ray.get(result)
-                    episodes[ready_worker_id].append(episode_batch)
+            # check which workers are done/not done collecting a sample
+            # if any are done, send them to process the collected episode
+            # if they are not, keep checking if they are done
+            ready, not_ready = ray.wait(active_workers,
+                                        num_returns=1,
+                                        timeout=0.001)
+            active_workers = not_ready
+            for result in ready:
+                ready_worker_id, episode_batch = ray.get(result)
+                episodes[ready_worker_id].append(episode_batch)
 
-                    if len(episodes[ready_worker_id]) < n_eps_per_worker:
-                        idle_worker_ids.append(ready_worker_id)
-
-                    pbar.update(1)
+                if len(episodes[ready_worker_id]) < n_eps_per_worker:
+                    idle_worker_ids.append(ready_worker_id)
 
         ordered_episodes = list(
             itertools.chain(
