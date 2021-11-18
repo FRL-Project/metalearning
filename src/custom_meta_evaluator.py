@@ -1,11 +1,13 @@
 # based on the original MetaEvaluator from https://github.com/rlworkgroup/garage/blob/master/src/garage/experiment/meta_evaluator.py
 """Evaluator which tests Meta-RL algorithms on test environments."""
-
+import click
 from dowel import logger, tabular
 
 from garage import EpisodeBatch, log_multitask_performance
 from garage.experiment.deterministic import get_seed
 from garage.sampler import DefaultWorker, WorkerFactory, RaySampler
+
+from src.sampler.custom_ray_sampler import CustomRaySampler
 
 
 class CustomMetaEvaluator:
@@ -83,7 +85,7 @@ class CustomMetaEvaluator:
         if self._test_sampler is None:
             env = env_updates[0]()
             self._max_episode_length = env.spec.max_episode_length
-            self._test_sampler = RaySampler.from_worker_factory(
+            self._test_sampler = CustomRaySampler.from_worker_factory(
                 WorkerFactory(seed=get_seed(),
                               max_episode_length=self._max_episode_length,
                               n_workers=self._n_exploration_eps,
@@ -91,19 +93,18 @@ class CustomMetaEvaluator:
                               worker_args=self._worker_args),
                 agents=algo.get_exploration_policy(),
                 envs=env)
-        for env_up in env_updates:
-            policy = algo.get_exploration_policy()
-            # from time import time
-            # start = time()
-            eps = self._test_sampler.obtain_samples(self._eval_itr, 1, policy, env_up)
-            # print("time sampling:", str(time()-start), end=' ')
-            adapted_policy = algo.adapt_policy(policy, eps)
-            adapted_eps = self._test_sampler.obtain_samples(
-                self._eval_itr,
-                test_episodes_per_task * self._max_episode_length,
-                adapted_policy)
-            adapted_episodes.append(adapted_eps)
-            # print(", total", str(time() - start))
+        with click.progressbar(env_updates, length=len(env_updates), label="Test Instance") as pbar:
+            for env_up in pbar:
+                policy = algo.get_exploration_policy()
+
+                eps = self._test_sampler.obtain_samples(self._eval_itr, 1, policy, env_up)
+                adapted_policy = algo.adapt_policy(policy, eps)
+                adapted_eps = self._test_sampler.obtain_samples(
+                    self._eval_itr,
+                    test_episodes_per_task * self._max_episode_length,
+                    adapted_policy)
+                adapted_episodes.append(adapted_eps)
+
         logger.log('Finished meta-testing...')
 
         if self._test_task_names is not None:
