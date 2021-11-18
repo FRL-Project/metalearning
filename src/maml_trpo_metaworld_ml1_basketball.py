@@ -5,15 +5,9 @@
 import click
 import metaworld
 import torch
-import os
-
-from datetime import datetime
-from helpers import environmentvariables
-from helpers import out_dir_config
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv
-from garage.experiment import (MetaEvaluator, MetaWorldTaskSampler,
-                               SetTaskSampler)
+from garage.experiment import (MetaWorldTaskSampler, SetTaskSampler)
 from garage.experiment.deterministic import set_seed
 from garage.sampler import RaySampler
 from garage.torch.algos import MAMLTRPO
@@ -21,10 +15,15 @@ from garage.torch.policies import GaussianMLPPolicy
 from garage.torch.value_functions import GaussianMLPValueFunction
 from garage.trainer import Trainer
 
+from helpers import environmentvariables
+from helpers import out_dir_config
+from experiment.custom_meta_evaluator import CustomMetaEvaluator
+
 # yapf: enable
 
-#Init env. variables
+# Init env. variables
 environmentvariables.initialize()
+
 
 @click.command()
 @click.option('--seed', default=1)
@@ -71,9 +70,9 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, rollouts_per_task,
                                               hidden_nonlinearity=torch.tanh,
                                               output_nonlinearity=None)
 
-    meta_evaluator = MetaEvaluator(test_task_sampler=test_sampler,
-                                   n_test_tasks=1,
-                                   n_exploration_eps=rollouts_per_task)
+    meta_evaluator = CustomMetaEvaluator(test_task_sampler=test_sampler,
+                                         n_test_tasks=1,
+                                         n_exploration_eps=rollouts_per_task)
 
     sampler = RaySampler(agents=policy,
                          envs=env,
