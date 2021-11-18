@@ -7,7 +7,7 @@ from garage import EpisodeBatch, log_multitask_performance
 from garage.experiment.deterministic import get_seed
 from garage.sampler import DefaultWorker, WorkerFactory, RaySampler
 
-from src.sampler.custom_ray_sampler import CustomRaySampler
+from sampler.custom_ray_sampler import CustomRaySampler
 
 
 class CustomMetaEvaluator:
