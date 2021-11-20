@@ -27,7 +27,7 @@ environmentvariables.initialize()
 
 @click.command()
 @click.option('--seed', default=1)
-@click.option('--epochs', default=300)
+@click.option('--epochs', default=2000)
 @click.option('--episodes_per_task', default=10)
 @click.option('--meta_batch_size', default=20)
 @click.option('--inner_lr', default=0.1)
