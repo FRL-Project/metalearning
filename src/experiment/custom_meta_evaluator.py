@@ -96,8 +96,7 @@ class CustomMetaEvaluator:
         with click.progressbar(env_updates, length=len(env_updates), label="Test Instance") as pbar:
             for env_up in pbar:
                 policy = algo.get_exploration_policy()
-
-                eps = self._test_sampler.obtain_exact_episodes(1, policy, env_up)
+                eps = self._test_sampler.obtain_samples(self._eval_itr, self._max_episode_length * self._n_exploration_eps, policy, env_up)
                 adapted_policy = algo.adapt_policy(policy, eps)
                 adapted_eps = self._test_sampler.obtain_samples(
                     self._eval_itr,
