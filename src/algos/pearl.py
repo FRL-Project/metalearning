@@ -1,3 +1,4 @@
+# based on https://github.com/rlworkgroup/garage
 """PEARL and PEARLWorker in Pytorch.
 Code is adapted from https://github.com/katerakelly/oyster.
 """
@@ -18,7 +19,6 @@ from garage.torch import global_device
 from garage.torch.embeddings import MLPEncoder
 from garage.torch.policies import ContextConditionedPolicy
 
-from experiment.custom_meta_evaluator import CustomMetaEvaluator
 
 
 class PEARL(MetaRLAlgorithm):
