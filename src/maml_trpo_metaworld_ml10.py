@@ -10,7 +10,7 @@ from garage.envs import MetaWorldSetTaskEnv
 from garage.experiment import (MetaWorldTaskSampler, SetTaskSampler)
 from garage.experiment.deterministic import set_seed
 from garage.sampler import RaySampler
-from garage.torch.algos import MAMLTRPO
+from algos.maml_trpo import MAMLTRPO
 from garage.torch.policies import GaussianMLPPolicy
 from garage.torch.value_functions import GaussianMLPValueFunction
 from garage.trainer import Trainer
