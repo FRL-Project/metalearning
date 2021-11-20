@@ -1,6 +1,4 @@
-# based on https://github.com/rlworkgroup/garage/
 """PEARL and PEARLWorker in Pytorch.
-
 Code is adapted from https://github.com/katerakelly/oyster.
 """
 
@@ -90,7 +88,6 @@ class PEARL(MetaRLAlgorithm):
         reward_scale (int): Reward scale.
         update_post_train (int): How often to resample context when obtaining
             data during training (in episodes).
-
     """
 
     # pylint: disable=too-many-statements
@@ -98,7 +95,8 @@ class PEARL(MetaRLAlgorithm):
             self,
             env,
             inner_policy,
-            qf,
+            qf1,
+            qf2,
             vf,
             sampler,
             *,  # Mostly numbers after here.
@@ -137,8 +135,8 @@ class PEARL(MetaRLAlgorithm):
             update_post_train=1):
 
         self._env = env
-        self._qf1 = qf
-        self._qf2 = copy.deepcopy(qf)
+        self._qf1 = qf1
+        self._qf2 = qf2
         self._vf = vf
         self._num_train_tasks = num_train_tasks
         self._latent_dim = latent_dim
@@ -180,10 +178,10 @@ class PEARL(MetaRLAlgorithm):
                              'test_env_sampler.n_tasks is None')
 
         worker_args = dict(deterministic=True, accum_context=True)
-        self._evaluator = CustomMetaEvaluator(test_task_sampler=test_env_sampler,
-                                              worker_class=PEARLWorker,
-                                              worker_args=worker_args,
-                                              n_test_tasks=num_test_tasks)
+        self._evaluator = MetaEvaluator(test_task_sampler=test_env_sampler,
+                                        worker_class=PEARLWorker,
+                                        worker_args=worker_args,
+                                        n_test_tasks=num_test_tasks)
 
         encoder_spec = self.get_env_spec(self._single_env, latent_dim,
                                          'encoder')
