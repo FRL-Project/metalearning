@@ -36,7 +36,8 @@ environmentvariables.initialize()
 def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
                              meta_batch_size,
                              inner_lr,
-                             outer_lr):
+                             outer_lr,
+                             meta_testing_episodes_per_task=10):
     """Set up environment and algorithm and run the task.
 
     Args:
@@ -50,6 +51,7 @@ def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
         meta_batch_size (int): Number of tasks sampled per batch.
         inner_lr (float): Adaptation learning rate.
         outer_lr (float): Meta policy learning rate.
+        meta_testing_episodes_per_task (int): Number of rollouts per task during meta testing.
     """
     set_seed(seed)
     ml45 = metaworld.ML45()
@@ -77,7 +79,8 @@ def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
                                               hidden_nonlinearity=torch.tanh,
                                               output_nonlinearity=None)
 
-    meta_evaluator = CustomMetaEvaluator(test_task_sampler=test_task_sampler)
+    meta_evaluator = CustomMetaEvaluator(test_task_sampler=test_task_sampler,
+                                         n_exploration_eps=meta_testing_episodes_per_task)
 
     sampler = RaySampler(agents=policy,
                          envs=env,

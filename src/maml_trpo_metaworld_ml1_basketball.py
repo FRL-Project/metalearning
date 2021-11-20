@@ -36,7 +36,8 @@ environmentvariables.initialize()
 def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, episodes_per_task,
                                        meta_batch_size,
                                        inner_lr,
-                                       outer_lr):
+                                       outer_lr,
+                                       meta_testing_episodes_per_task=10):
     """Set up environment and algorithm and run the task.
     Args:
         ctxt (garage.experiment.ExperimentContext): The experiment
@@ -49,6 +50,7 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, episodes_per_task,
         meta_batch_size (int): Number of tasks sampled per batch.
         inner_lr (float): Adaptation learning rate.
         outer_lr (float): Meta policy learning rate.
+        meta_testing_episodes_per_task (int): Number of rollouts per task during meta testing.
     """
     set_seed(seed)
 
@@ -72,7 +74,7 @@ def maml_trpo_metaworld_ml1_basketball(ctxt, seed, epochs, episodes_per_task,
 
     meta_evaluator = CustomMetaEvaluator(test_task_sampler=test_sampler,
                                          n_test_tasks=1,
-                                         n_exploration_eps=episodes_per_task)
+                                         n_exploration_eps=meta_testing_episodes_per_task)
 
     sampler = RaySampler(agents=policy,
                          envs=env,
