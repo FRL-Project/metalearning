@@ -1,3 +1,4 @@
+# based on https://github.com/rlworkgroup/garage
 """Model-Agnostic Meta-Learning (MAML) algorithm applied to TRPO."""
 import torch
 
@@ -73,15 +74,13 @@ class MAMLTRPO(MAML):
 
         policy_optimizer = OptimizerWrapper(
             (torch.optim.Adam, dict(lr=inner_lr)), policy)
-        vf_optimizer = OptimizerWrapper((torch.optim.Adam, dict(lr=inner_lr)),
-                                        value_function)
 
         inner_algo = VPG(env.spec,
                          policy,
                          value_function,
                          None,
                          policy_optimizer=policy_optimizer,
-                         vf_optimizer=vf_optimizer,
+                         vf_optimizer=None,
                          num_train_per_epoch=1,
                          discount=discount,
                          gae_lambda=gae_lambda,
