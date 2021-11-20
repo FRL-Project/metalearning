@@ -32,11 +32,13 @@ environmentvariables.initialize()
 @click.option('--meta_batch_size', default=45)
 @click.option('--inner_lr', default=0.1)
 @click.option('--outer_lr', default=1e-3)
+@click.option('--discount', default=0.99)
 @wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
 def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
                              meta_batch_size,
                              inner_lr,
                              outer_lr,
+                             discount,
                              meta_testing_episodes_per_task=10):
     """Set up environment and algorithm and run the task.
 
@@ -51,6 +53,7 @@ def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
         meta_batch_size (int): Number of tasks sampled per batch.
         inner_lr (float): Adaptation learning rate.
         outer_lr (float): Meta policy learning rate.
+        discount (float): Discount factor.
         meta_testing_episodes_per_task (int): Number of rollouts per task during meta testing.
     """
     set_seed(seed)
@@ -94,7 +97,7 @@ def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
                     sampler=sampler,
                     value_function=value_function,
                     meta_batch_size=meta_batch_size,
-                    discount=0.99,
+                    discount=discount,
                     gae_lambda=1.,
                     inner_lr=inner_lr,
                     outer_lr=outer_lr,
