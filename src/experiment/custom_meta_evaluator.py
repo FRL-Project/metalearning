@@ -97,7 +97,7 @@ class CustomMetaEvaluator:
             for env_up in pbar:
                 policy = algo.get_exploration_policy()
 
-                eps = self._test_sampler.obtain_samples(self._eval_itr, 1, policy, env_up)
+                eps = self._test_sampler.obtain_exact_episodes(1, policy, env_up)
                 adapted_policy = algo.adapt_policy(policy, eps)
                 adapted_eps = self._test_sampler.obtain_samples(
                     self._eval_itr,
