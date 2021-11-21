@@ -75,21 +75,21 @@ Commands are customized such that a job needs the right amout of resources (chec
 
 | experiment               |cmd                                                                                                 | state |
 |--------------------------|----------------------------------------------------------------------------------------------------|-------|
-| outer_lr=1e-2            | `bsub -n 4 -J "maml-ml10-1e-2" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 1e-2'` |run |
-| outer_lr=5e-3            | `bsub -n 4 -J "maml-ml10-5e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-3'` |run |
-| outer_lr=1e-3 default    | `bsub -n 4 -J "maml-ml10-1e-3" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 1e-3'` |run |
-| outer_lr=5e-4            | `bsub -n 4 -J "maml-ml10-5e-4" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-4'` |run |
-| inner_lr=0.5             | `bsub -n 4 -J "maml-ml10-in-0.5" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.5'`  |
-| inner_lr=0.1 default     | `bsub -n 4 -J "maml-ml10-in-0.1" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.1'`  |
-| inner_lr=0.05            | `bsub -n 4 -J "maml-ml10-in-0.05" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.05'` |
-| inner_lr=0.01            | `bsub -n 4 -J "maml-ml10-in-0.01" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.01'` |
+| outer_lr=1e-2            | `bsub -n 10 -J "maml-ml10-1e-2" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 1e-2'` |run |
+| outer_lr=5e-3            | `bsub -n 10 -J "maml-ml10-5e-3" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-3'` |run |
+| outer_lr=1e-3 default    | `bsub -n 10 -J "maml-ml10-1e-3" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 1e-3'` |run |
+| outer_lr=5e-4            | `bsub -n 10 -J "maml-ml10-5e-4" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --outer_lr 5e-4'` |run |
+| inner_lr=0.5             | `bsub -n 10 -J "maml-ml10-in-0.5" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.5'`  | run
+| inner_lr=0.1 default     | `bsub -n 10 -J "maml-ml10-in-0.1" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.1'`  | run
+| inner_lr=0.05            | `bsub -n 10 -J "maml-ml10-in-0.05" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.05'` | run
+| inner_lr=0.01            | `bsub -n 10 -J "maml-ml10-in-0.01" -W 120:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --inner_lr 0.01'` | run
 
 | experiment               |cmd                                                                                                 | state |
 |--------------------------|----------------------------------------------------------------------------------------------------|-------|
-| episodes_per_task=10 (default) | `bsub -n 10 -J "maml-ml10-eps-10" -W 300:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 10'` | |
-| episodes_per_task=20 | `bsub -n 10 -J "maml-ml10-eps-20" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 20'` | |
-| episodes_per_task=45 | `bsub -n 10 -J "maml-ml10-eps-45" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 45'` | |
-| episodes_per_task=60 | `bsub -n 10 -J "maml-ml10-eps-60" -W 300:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 60'` | |
+| episodes_per_task=10 (default) | `bsub -n 10 -J "maml-ml10-eps-10" -W 300:00 -R "rusage[mem=2048]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 10'` | run |
+| episodes_per_task=20 | `bsub -n 10 -J "maml-ml10-eps-20" -W 120:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 20'` | run |
+| episodes_per_task=45 | `bsub -n 10 -J "maml-ml10-eps-45" -W 120:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 45'` | run |
+| episodes_per_task=60 | `bsub -n 10 -J "maml-ml10-eps-60" -W 120:00 -R "rusage[mem=4096]" 'python src/maml_trpo_metaworld_ml10.py --episodes_per_task 60'` | run |
 
 #### hyperparameter MAML ML45 (Andreas)
 
