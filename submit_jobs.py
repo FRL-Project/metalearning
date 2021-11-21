@@ -22,13 +22,16 @@ envs_file = {
 experiments_params = {
     "maml": {
         "outer_lr": {
-            "outer_lr": [1e-3, 5e-3, 5e-4],
+            "outer_lr": [1e-2, 1e-3, 5e-3, 5e-4],
         },
         "inner_lr": {
-            "inner_lr": [1e-1, 1e-2, 5e-2],
+            "inner_lr": [0.5, 1e-1, 5e-2, 1e-2],
         },
         "dis": {
             "discount": [0.95, 0.99, 0.999],
+        },
+        "eps": {
+            "episodes_per_task": [10, 20, 45, 60]
         }
     },
     "pearl": {
