@@ -1,10 +1,9 @@
-# based on https://github.com/rlworkgroup/garage
 """Model-Agnostic Meta-Learning (MAML) algorithm applied to TRPO."""
 import torch
 
 from garage import _Default
-from garage.torch.algos import VPG
-from garage.torch.algos.maml import MAML
+from algos.vpg import VPG
+from algos.maml import MAML
 from garage.torch.optimizers import (ConjugateGradientOptimizer,
                                      OptimizerWrapper)
 
