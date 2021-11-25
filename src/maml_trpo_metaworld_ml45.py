@@ -40,7 +40,7 @@ def maml_trpo_metaworld_ml45(ctxt, seed, epochs, episodes_per_task,
                              inner_lr,
                              outer_lr,
                              discount,
-                             meta_testing_episodes_per_task=10):
+                             meta_testing_episodes_per_task):
     """Set up environment and algorithm and run the task.
 
     Args:
