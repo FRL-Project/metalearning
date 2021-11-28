@@ -224,6 +224,16 @@ class ReplayBuffer(object):
     def __len__(self):
         return self._stored_steps
 
+    @property
+    def n_transitions_stored(self):
+        """Return the size of the replay buffer.
+
+        Returns:
+            int: Size of the current replay buffer.
+
+        """
+        return int(self._stored_steps)
+
     def save(self, location: str):
         f = h5py.File(location, 'w')
         f.create_dataset('obs', data=self._obs[:self._stored_steps], compression='lzf')
@@ -236,6 +246,19 @@ class ReplayBuffer(object):
         f.create_dataset('next_obs', data=self._next_obs[:self._stored_steps], compression='lzf')
         f.create_dataset('discount_factor', data=self._discount_factor)
         f.close()
+
+    def add_path(self, path):
+        trajectory = []
+
+        assert (isinstance(path, dict))
+
+        trajectory.append(Experience(path['observation'],
+                                     path['action'],
+                                     path['next_observation'],
+                                     path['reward'],
+                                     path['terminal']))
+
+        self.add_trajectory(trajectory)
 
     def add_trajectory(self, trajectory: List[Experience], force: bool = False):
         if self.immutable and not force:
@@ -272,6 +295,19 @@ class ReplayBuffer(object):
     def add_trajectories(self, trajectories: List[List[Experience]], force: bool = False):
         for trajectory in trajectories:
             self.add_trajectory(trajectory, force)
+
+    def sample_transitions(self, batch_size):
+        batch = self.sample(batch_size, return_dict=True)
+
+        batch_garage = {
+            'observation': batch['obs'],
+            'action': batch['actions'],
+            'next_observation': batch['next_obs'],
+            'reward': batch['rewards'],
+            'terminal': batch['dones']
+        }
+
+        return batch_garage
 
     def sample(self, batch_size, return_dict: bool = False, return_both: bool = False,
                noise: bool = False, contiguous: bool = False, device: str = 'cpu'):
