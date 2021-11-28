@@ -1,5 +1,5 @@
 # based on https://github.com/rlworkgroup/garage/pull/2287/files#diff-bb2d80290ec525d9afbe7851a1a04123b6e3a1d29b641a95292286fa5b7581bb
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """This is an example to train a Meta-World Environment with SAC algorithm."""
 import click
 from metaworld.envs import ALL_V2_ENVIRONMENTS_GOAL_OBSERVABLE
@@ -44,6 +44,7 @@ def sac_metaworld(ctxt=None, env_name=None, gpu=None, seed=1):
     trainer = Trainer(snapshot_config=ctxt)
     env_cls = ALL_V2_ENVIRONMENTS_GOAL_OBSERVABLE[env_name]
     env = env_cls(seed=seed)
+    env._freeze_rand_vec = False  # leads to a parametric variation on every reset
     max_path_length = env.max_path_length
 
     env = GymEnv(env, max_episode_length=max_path_length)
