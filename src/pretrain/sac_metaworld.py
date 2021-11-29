@@ -65,7 +65,7 @@ def sac_metaworld(ctxt=None, env_name=None, gpu=None, seed=1):
                                  hidden_sizes=[256, 256],
                                  hidden_nonlinearity=F.relu)
 
-    replay_buffer = ReplayBuffer(size=int(1e6),
+    replay_buffer = ReplayBuffer(size=int(5e6),
                                  obs_dim=env.spec.observation_space.shape[0],
                                  action_dim=env.spec.action_space.shape[0]
                                  )
