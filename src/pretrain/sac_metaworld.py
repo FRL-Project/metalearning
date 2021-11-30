@@ -17,13 +17,11 @@ from garage.torch.policies import TanhGaussianMLPPolicy
 from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
 
-from pretrain.buffer import ReplayBuffer
-
 import sys
 sys.path.append("..")
 from helpers import environmentvariables
 from helpers import out_dir_config
-
+from pretrain.buffer import ReplayBuffer
 
 # Init env. variables
 environmentvariables.initialize()
