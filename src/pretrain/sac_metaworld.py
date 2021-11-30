@@ -6,7 +6,7 @@ from metaworld.envs import ALL_V2_ENVIRONMENTS_GOAL_OBSERVABLE
 import numpy as np
 from torch import nn
 from torch.nn import functional as F
-from helpers import environmentvariables
+from src.helpers import environmentvariables
 from garage import wrap_experiment
 from garage.envs import GymEnv
 from garage.experiment import deterministic
@@ -16,7 +16,7 @@ from garage.torch.algos import SAC
 from garage.torch.policies import TanhGaussianMLPPolicy
 from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
-from helpers import out_dir_config
+from src.helpers import out_dir_config
 from pretrain.buffer import ReplayBuffer
 
 # Init env. variables
