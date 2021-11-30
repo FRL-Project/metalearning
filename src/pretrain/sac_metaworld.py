@@ -17,11 +17,9 @@ from garage.torch.policies import TanhGaussianMLPPolicy
 from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
 
-import sys
-sys.path.append("..")
-from helpers import environmentvariables
-from helpers import out_dir_config
-from pretrain.buffer import ReplayBuffer
+from src.helpers import environmentvariables
+from src.helpers import out_dir_config
+from buffer import ReplayBuffer
 
 # Init env. variables
 environmentvariables.initialize()
