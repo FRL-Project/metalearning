@@ -6,7 +6,7 @@ from metaworld.envs import ALL_V2_ENVIRONMENTS_GOAL_OBSERVABLE
 import numpy as np
 from torch import nn
 from torch.nn import functional as F
-
+from helpers import environmentvariables
 from garage import wrap_experiment
 from garage.envs import GymEnv
 from garage.experiment import deterministic
@@ -16,15 +16,17 @@ from garage.torch.algos import SAC
 from garage.torch.policies import TanhGaussianMLPPolicy
 from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
-
+from helpers import out_dir_config
 from pretrain.buffer import ReplayBuffer
 
+# Init env. variables
+environmentvariables.initialize()
 
 @click.command()
 @click.option('--env_name', type=str, default='basketball-v2')
 @click.option('--seed', type=int, default=1)
 @click.option('--gpu', type=int, default=None)
-@wrap_experiment(snapshot_mode='gap', snapshot_gap=50, name_parameters='all')
+@wrap_experiment(snapshot_mode='gap', snapshot_gap=50, name_parameters='all', log_dir=out_dir_config.get_out_dir(__file__))
 def sac_metaworld(ctxt=None, env_name=None, gpu=None, seed=1):
     """Set up environment and algorithm and run the task.
     Args:
@@ -67,7 +69,8 @@ def sac_metaworld(ctxt=None, env_name=None, gpu=None, seed=1):
 
     replay_buffer = ReplayBuffer(size=int(5e6),
                                  obs_dim=env.spec.observation_space.shape[0],
-                                 action_dim=env.spec.action_space.shape[0]
+                                 action_dim=env.spec.action_space.shape[0],
+                                 log_dir=ctxt.snapshot_dir
                                  )
     batch_size = max_path_length
     num_evaluation_points = 500

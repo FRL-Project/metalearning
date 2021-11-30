@@ -99,7 +99,7 @@ class ReplayBuffer(object):
 
         return buf
 
-    def __init__(self, size: int, obs_dim: int, action_dim: int, discount_factor: float = 0.99,
+    def __init__(self, size: int, obs_dim: int, action_dim: int, log_dir: str, discount_factor: float = 0.99,
                  immutable: bool = False, load_from: str = None, silent: bool = False, skip: int = 1,
                  stream_to_disk: bool = False, mode: str = 'end'):
         if size == -1 and load_from is None:
@@ -108,6 +108,7 @@ class ReplayBuffer(object):
 
         self.immutable = immutable
         self.stream_to_disk = stream_to_disk
+        self.log_dir = log_dir
 
         if load_from is not None:
             f = h5py.File(load_from, 'r')
@@ -211,6 +212,7 @@ class ReplayBuffer(object):
             f.close()
 
         self._write_location = self._stored_steps % self._size
+        self.path_counter = 0
         # self._valid = np.where(np.logical_and(~np.isnan(self._terminal_discounts[:,0]), self._terminal_discounts[:,0] < 0.35))[0]
 
     @property
@@ -259,6 +261,18 @@ class ReplayBuffer(object):
                                      path['terminal']))
 
         self.add_trajectory(trajectory)
+        self.path_counter += 1
+        if self._stored_steps % 10000 == 0:
+            print("Nr paths: " + str(self.path_counter))
+            filename = "paths.hdf5"
+            folder = os.path.join(self.log_dir, "hdf_files")
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            self.save(os.path.join(folder, filename))
+
+        if (self._stored_steps+1) == self._size:
+            print("Now we would save trajectories, stored steps = " + str(self._stored_steps))
+
 
     def add_trajectory(self, trajectory: List[Experience], force: bool = False):
         if self.immutable and not force:
