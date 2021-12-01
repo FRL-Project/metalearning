@@ -109,7 +109,6 @@ def sac_metaworld(ctxt=None, env_name=None, gpu=None, seed=1):
     sac.to()
     trainer.setup(algo=sac, env=env)
     trainer.train(n_epochs=epochs, batch_size=batch_size)
-    replay_buffer.save(env_name + "buffer.h5")
 
 
 sac_metaworld()
