@@ -76,7 +76,7 @@ def maml_trpo_metaworld_ml10(ctxt, seed, epochs, episodes_per_task,
                                               output_nonlinearity=None)
 
     meta_evaluator = CustomMetaEvaluator(test_task_sampler=test_sampler,
-                                         n_test_tasks=10,
+                                         n_test_tasks=None,  # 10
                                          n_exploration_eps=meta_testing_episodes_per_task)
 
     sampler = RaySampler(agents=policy,
