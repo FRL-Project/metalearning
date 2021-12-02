@@ -18,7 +18,7 @@ envs_file = {
     "ml1": 'metaworld_ml1_basketball.py',
     "ml10": 'metaworld_ml10.py',
     "ml45": 'metaworld_ml45.py',
-    "-": 'metaworld'
+    "-": 'metaworld.py'
 }
 
 experiments_params = {
