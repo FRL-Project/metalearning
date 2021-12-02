@@ -7,7 +7,7 @@ import metaworld
 import torch
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv
-from garage.experiment import (MetaWorldTaskSampler, SetTaskSampler)
+from garage.experiment import (MetaWorldTaskSampler, SetTaskSampler, MetaEvaluator)
 from garage.experiment.deterministic import set_seed
 from garage.sampler import RaySampler
 from garage.torch.algos.maml_trpo import MAMLTRPO
@@ -17,7 +17,6 @@ from garage.trainer import Trainer
 
 from helpers import environmentvariables
 from helpers import out_dir_config
-from experiment.custom_meta_evaluator import MetaEvaluator
 
 # yapf: enable
 
@@ -36,11 +35,11 @@ environmentvariables.initialize()
 @click.option('--meta_testing_episodes_per_task', default=10)
 @wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
 def maml_trpo_metaworld_ml10_std(ctxt, seed, epochs, episodes_per_task,
-                             meta_batch_size,
-                             inner_lr,
-                             outer_lr,
-                             discount,
-                             meta_testing_episodes_per_task=10):
+                                 meta_batch_size,
+                                 inner_lr,
+                                 outer_lr,
+                                 discount,
+                                 meta_testing_episodes_per_task=10):
     """Set up environment and algorithm and run the task.
     Args:
         ctxt (ExperimentContext): The experiment configuration used by
