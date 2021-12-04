@@ -34,7 +34,7 @@ for idx, experiment in enumerate(experiments_folders):
         continue
     with open(os.path.join(experiment, 'variant.json')) as variant:
         variant_content = json.load(variant)
-        env_mapping[variant_content['env_name']] = idx
+        env_mapping[idx] = variant_content['env_name']
         shutil.copyfile(os.path.join(experiment, 'hdf_files', 'paths.hdf5'), os.path.join(out_dir, str(idx)+'.hdf5'))
 
 with open(os.path.join(out_dir, 'env_mapping.json'), 'w') as env_mapping_file:
