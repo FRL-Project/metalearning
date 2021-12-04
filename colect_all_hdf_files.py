@@ -38,7 +38,7 @@ for idx, experiment in enumerate(experiments_folders):
         env_mapping[idx] = variant_content['env_name']
         shutil.copyfile(os.path.join(experiment, 'hdf_files', 'paths.hdf5'), os.path.join(out_dir, str(idx)+'.hdf5'))
 
-with open(os.path.join(out_dir, 'env_mapping.json'), 'w') as env_mapping_file:
+with open(os.path.join(out_dir, 'env_mapping_sac_training.json'), 'w') as env_mapping_file:
     json.dump(env_mapping, env_mapping_file)
 
 #generate task_config for ml10
