@@ -35,7 +35,7 @@ for idx, experiment in enumerate(experiments_folders):
         continue
     with open(os.path.join(experiment, 'variant.json')) as variant:
         variant_content = json.load(variant)
-        env_mapping[idx] = variant_content['env_name']
+        env_mapping[variant_content['env_name']] = idx
         shutil.copyfile(os.path.join(experiment, 'hdf_files', 'paths.hdf5'), os.path.join(out_dir, str(idx)+'.hdf5'))
 
 with open(os.path.join(out_dir, 'env_mapping_sac_training.json'), 'w') as env_mapping_file:
@@ -44,15 +44,14 @@ with open(os.path.join(out_dir, 'env_mapping_sac_training.json'), 'w') as env_ma
 #generate task_config for ml10
 if create_ml10_config:
 
-    inv_map_env = {v: k for k, v in env_mapping.items()}
     ml10_test_tasks = ["door-close-v2", "drawer-open-v2", "lever-pull-v2", "shelf-place-v2", "sweep-v2"]
     ml10_train_tasks = ["basketball-v2", "button-press-v2", "dial-turn-v2", "drawer-close-v2", "peg-insert-side-v2",
                         "pick-place-v2", "push-v2", "reach-v2", "sweep-into-v2", "window-open-v2"]
-    ml10_train_task_numbers = [inv_map_env[cur] for cur in ml10_train_tasks if cur in inv_map_env.keys()]
-    ml10_test_tasks_numbers = [inv_map_env[cur] for cur in ml10_test_tasks if cur in inv_map_env.keys()]
+    ml10_train_task_numbers = [env_mapping[cur] for cur in ml10_train_tasks if cur in env_mapping.keys()]
+    ml10_test_tasks_numbers = [env_mapping[cur] for cur in ml10_test_tasks if cur in env_mapping.keys()]
 
     task_config_ml10 = {}
-    task_config_ml10["env"] = "ml1"
+    task_config_ml10["env"] = "ml10"
     task_config_ml10["total_tasks"] = 10,
     task_config_ml10["train_tasks"] = ml10_train_task_numbers
     task_config_ml10["test_tasks"] = ml10_test_tasks_numbers
@@ -60,7 +59,6 @@ if create_ml10_config:
     task_config_ml10["test_buffer_paths"] = "../../../macaw_offline_data/metaworld/buffers_metaworld_train_{}.hdf5"
     with open(os.path.join(out_dir, 'metaworld_ml10.json'), 'w') as config_json_ml10:
         json.dump(task_config_ml10, config_json_ml10)
-
 
 
 print("Done!!")
