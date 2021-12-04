@@ -55,8 +55,8 @@ if create_ml10_config:
     task_config_ml10["total_tasks"] = 10,
     task_config_ml10["train_tasks"] = ml10_train_task_numbers
     task_config_ml10["test_tasks"] = ml10_test_tasks_numbers
-    task_config_ml10["train_buffer_paths"] = "../../../macaw_offline_data/metaworld/buffers_metaworld_train_{}.hdf5"
-    task_config_ml10["test_buffer_paths"] = "../../../macaw_offline_data/metaworld/buffers_metaworld_train_{}.hdf5"
+    task_config_ml10["train_buffer_paths"] = "../../../macaw_offline_data/metaworld/{}.hdf5"
+    task_config_ml10["test_buffer_paths"] = "../../../macaw_offline_data/metaworld/{}.hdf5"
     with open(os.path.join(out_dir, 'metaworld_ml10.json'), 'w') as config_json_ml10:
         json.dump(task_config_ml10, config_json_ml10)
 
