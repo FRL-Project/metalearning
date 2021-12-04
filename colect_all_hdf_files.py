@@ -6,7 +6,7 @@ from src.helpers import environmentvariables
 from src.helpers import out_dir_config
 
 #VARS
-min_iter_sac = 50
+min_iter_sac = 200
 
 #Get all directories
 environmentvariables.initialize()
@@ -40,3 +40,4 @@ for idx, experiment in enumerate(experiments_folders):
 with open(os.path.join(out_dir, 'env_mapping.json'), 'w') as env_mapping_file:
     json.dump(env_mapping, env_mapping_file)
 
+print("Done!!")
