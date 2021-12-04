@@ -7,6 +7,7 @@ from src.helpers import out_dir_config
 
 #VARS
 min_iter_sac = 200
+create_ml10_config = True
 
 #Get all directories
 environmentvariables.initialize()
@@ -39,5 +40,27 @@ for idx, experiment in enumerate(experiments_folders):
 
 with open(os.path.join(out_dir, 'env_mapping.json'), 'w') as env_mapping_file:
     json.dump(env_mapping, env_mapping_file)
+
+#generate task_config for ml10
+if create_ml10_config:
+
+    inv_map_env = {v: k for k, v in env_mapping.items()}
+    ml10_test_tasks = ["door-close-v2", "drawer-open-v2", "lever-pull-v2", "shelf-place-v2", "sweep-v2"]
+    ml10_train_tasks = ["basketball-v2", "button-press-v2", "dial-turn-v2", "drawer-close-v2", "peg-insert-side-v2",
+                        "pick-place-v2", "push-v2", "reach-v2", "sweep-into-v2", "window-open-v2"]
+    ml10_train_task_numbers = [inv_map_env[cur] for cur in ml10_train_tasks if cur in inv_map_env.keys()]
+    ml10_test_tasks_numbers = [inv_map_env[cur] for cur in ml10_test_tasks if cur in inv_map_env.keys()]
+
+    task_config_ml10 = {}
+    task_config_ml10["env"] = "ml1"
+    task_config_ml10["total_tasks"] = 10,
+    task_config_ml10["train_tasks"] = ml10_train_task_numbers
+    task_config_ml10["test_tasks"] = ml10_test_tasks_numbers
+    task_config_ml10["train_buffer_paths"] = "../../../macaw_offline_data/metaworld/buffers_metaworld_train_{}.hdf5"
+    task_config_ml10["test_buffer_paths"] = "../../../macaw_offline_data/metaworld/buffers_metaworld_train_{}.hdf5"
+    with open(os.path.join(out_dir, 'metaworld_ml10.json'), 'w') as config_json_ml10:
+        json.dump(task_config_ml10, config_json_ml10)
+
+
 
 print("Done!!")
