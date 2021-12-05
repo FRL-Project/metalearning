@@ -2,6 +2,8 @@
 """This is an example to train MAML-TRPO on ML10 environment."""
 # pylint: disable=no-value-for-parameter
 # yapf: disable
+import sys
+
 import click
 import metaworld
 import torch
@@ -34,7 +36,7 @@ environmentvariables.initialize()
 @click.option('--outer_lr', default=1e-3)
 @click.option('--discount', default=0.99)
 @click.option('--meta_testing_episodes_per_task', default=10)
-@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__))
+@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__, ''.join(sys.argv[1:])))
 def maml_trpo_metaworld_ml10(ctxt, seed, epochs, episodes_per_task,
                              meta_batch_size,
                              inner_lr,
