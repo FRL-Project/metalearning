@@ -212,7 +212,6 @@ class ReplayBuffer(object):
             f.close()
 
         self._write_location = self._stored_steps % self._size
-        self.path_counter = 0
         # self._valid = np.where(np.logical_and(~np.isnan(self._terminal_discounts[:,0]), self._terminal_discounts[:,0] < 0.35))[0]
 
     @property
@@ -261,9 +260,7 @@ class ReplayBuffer(object):
                                      path['terminal']))
 
         self.add_trajectory(trajectory)
-        self.path_counter += 1
         if self._stored_steps % 10000 == 0:
-            print("Nr paths: " + str(self.path_counter))
             filename = "paths.hdf5"
             folder = os.path.join(self.log_dir, "hdf_files")
             if not os.path.exists(folder):
