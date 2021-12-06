@@ -6,13 +6,16 @@ from src.helpers import environmentvariables
 from src.helpers import out_dir_config
 
 #VARS
-min_iter_sac = 200
+min_iter_sac = 50
 create_ml10_config = True
 
 #Get all directories
 environmentvariables.initialize()
 out_dir = out_dir_config.get_out_dir(__file__)
 experiments_dir = os.getenv("OUT_DIR")
+
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
 
 experiments_folders = []
 #Identify all folders which contain a relevant sac-experiment
@@ -34,6 +37,8 @@ for idx, experiment in enumerate(experiments_folders):
         variant_content = json.load(variant)
         env_mapping[variant_content['env_name']] = idx
         shutil.copyfile(os.path.join(experiment, 'hdf_files', 'paths.hdf5'), os.path.join(out_dir, str(idx)+'.hdf5'))
+        if os.path.isfile(os.path.join(experiment, 'progress.csv')):
+            shutil.copyfile(os.path.join(experiment, 'progress.csv'), os.path.join(out_dir, str(idx)+'.csv'))
 
 with open(os.path.join(out_dir, 'env_mapping_sac_training.json'), 'w') as env_mapping_file:
     json.dump(env_mapping, env_mapping_file)
