@@ -14,9 +14,6 @@ environmentvariables.initialize()
 out_dir = out_dir_config.get_out_dir(__file__)
 experiments_dir = os.getenv("OUT_DIR")
 
-if not os.path.exists(os.path.join(out_dir, "hdf5_files")):
-    os.makedirs(os.path.join(out_dir, "hdf5_files"))
-
 experiments_folders = []
 #Identify all folders which contain a relevant sac-experiment
 for experiment in os.listdir(experiments_dir):
