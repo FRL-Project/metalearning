@@ -35,13 +35,14 @@ def pearl_metaworld_ml10(ctxt=None,
                          encoder_hidden_size=200,
                          net_size=300,
                          num_steps_per_epoch=4000,
-                         num_initial_steps=5000,
+                         num_initial_steps=15000,
                          num_steps_prior=2500,
+                         num_steps_posterior=2500,
                          num_extra_rl_steps_posterior=2500,
                          batch_size=1000,
                          embedding_batch_size=250,
                          embedding_mini_batch_size=250,
-                         reward_scale=1000.,
+                         reward_scale=10.,
                          lr=3e-4,
                          use_gpu=False):
     """Train PEARL with ML10 environments.
@@ -61,6 +62,8 @@ def pearl_metaworld_ml10(ctxt=None,
             training.
         num_steps_prior (int): Number of transitions to obtain per task with
             z ~ prior.
+        num_steps_posterior (int): Number of transitions to obtain per task
+            with z ~ posterior.
         num_extra_rl_steps_posterior (int): Number of additional transitions
             to obtain per task with z ~ posterior that are only used to train
             the policy and NOT the encoder.
@@ -134,12 +137,13 @@ def pearl_metaworld_ml10(ctxt=None,
                   num_initial_steps=num_initial_steps,
                   num_tasks_sample=num_tasks_sample,
                   num_steps_prior=num_steps_prior,
+                  num_steps_posterior=num_steps_posterior,
                   num_extra_rl_steps_posterior=num_extra_rl_steps_posterior,
                   batch_size=batch_size,
                   embedding_batch_size=embedding_batch_size,
                   embedding_mini_batch_size=embedding_mini_batch_size,
                   reward_scale=reward_scale,
-                  num_test_tasks=10)
+                  num_test_tasks=None)
 
     set_gpu_mode(use_gpu, gpu_id=0)
     if use_gpu:
