@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """PEARL ML1 example."""
 import os
+import sys
 
 import click
 import metaworld
@@ -29,7 +30,7 @@ environmentvariables.initialize()
 @click.option('--env_name', type=str, default='basketball-v2')
 @click.option('--lr', default=3e-4)
 @click.option('--use_gpu', default=False)
-@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__), archive_launch_repo=False)
+@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__, ''.join(sys.argv[1:])), archive_launch_repo=False)
 def pearl_metaworld_ml1(ctxt,
                         env_name,
                         seed=1,

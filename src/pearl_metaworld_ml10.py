@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """PEARL ML10 example."""
+import sys
 
 import click
 import metaworld
@@ -27,7 +28,7 @@ environmentvariables.initialize()
 @click.command()
 @click.option('--lr', default=3e-4)
 @click.option('--use_gpu', default=False)
-@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__), archive_launch_repo=False)
+@wrap_experiment(snapshot_mode='all', log_dir=out_dir_config.get_out_dir(__file__, ''.join(sys.argv[1:])), archive_launch_repo=False)
 def pearl_metaworld_ml10(ctxt=None,
                          seed=1,
                          num_epochs=1000,
