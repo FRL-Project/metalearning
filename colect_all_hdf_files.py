@@ -46,7 +46,7 @@ with open(os.path.join(out_dir, 'env_mapping_sac_training.json'), 'w') as env_ma
 #generate task_config for ml10
 if create_ml10_config:
 
-    ml10_test_tasks = ["door-close-v2", "drawer-open-v2", "lever-pull-v2", "shelf-place-v2", "sweep-v2"]
+    ml10_test_tasks = ["door-close-v2", "drawer-open-v2", "lever-pull-v2", "shelf-place-v2", "sweep-into-v2"]
     ml10_train_tasks = ["basketball-v2", "button-press-v2", "dial-turn-v2", "drawer-close-v2", "peg-insert-side-v2",
                         "pick-place-v2", "push-v2", "reach-v2", "sweep-into-v2", "window-open-v2"]
     ml10_train_task_numbers = [env_mapping[cur] for cur in ml10_train_tasks if cur in env_mapping.keys()]
