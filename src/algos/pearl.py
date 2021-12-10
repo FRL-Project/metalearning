@@ -20,7 +20,6 @@ from garage.torch.embeddings import MLPEncoder
 from garage.torch.policies import ContextConditionedPolicy
 
 
-
 class PEARL(MetaRLAlgorithm):
     r"""A PEARL model based on https://arxiv.org/abs/1903.08254.
 
@@ -311,10 +310,11 @@ class PEARL(MetaRLAlgorithm):
             self._train_once()
             trainer.step_itr += 1
 
-            logger.log('Evaluating...')
             # evaluate
             self._policy.reset_belief()
-            self._evaluator.evaluate(self)
+            if epoch % 10:  # evaluate only every 10th epoch
+                logger.log('Evaluating...')
+                self._evaluator.evaluate(self)
 
     def _train_once(self):
         """Perform one iteration of training."""
