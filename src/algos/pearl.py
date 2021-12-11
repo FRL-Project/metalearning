@@ -312,7 +312,7 @@ class PEARL(MetaRLAlgorithm):
 
             # evaluate
             self._policy.reset_belief()
-            if epoch % 10:  # evaluate only every 10th epoch
+            if epoch % 20 == 0:  # evaluate only every 20th epoch
                 logger.log('Evaluating...')
                 self._evaluator.evaluate(self)
 
