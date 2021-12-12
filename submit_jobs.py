@@ -74,7 +74,7 @@ def product_dict(**kwargs):
 @click.command()
 @click.option('--algo', default="maml")
 @click.option('--env', default="ml10")
-@click.option('--exp', default="dis")
+@click.option('--exp', default="*")  # use * for all experiments
 @click.option('--time', default="120:00")
 @click.option('--n_cpus', default="10")
 @click.option('--mem', default="2048")
@@ -87,37 +87,42 @@ def submit_job(algo, env, exp, time, n_cpus, mem, gpu=None, path="./src"):
     #     tasks_list = open("./cfg_files/tasks", "r")
     #     experiment_parameter = tasks_list.read().split("\n")
     # else:
-    experiment_parameter = experiments_params[algo][exp]
+    if not exp == "*":
+        experiment_parameter = {exp: experiments_params[algo][exp]}
+    else:
+        experiment_parameter = experiments_params[algo]
 
-    for params in product_dict(**experiment_parameter):
+    for exp in experiment_parameter:
+        for params in product_dict(**experiment_parameter[exp]):
 
-        command = ''
+            command = ''
 
-        # use 4 cpus
-        command += 'bsub -n ' + n_cpus
-        command += ' -J "' + algo + '-' + env + '-' + exp + ':' + str(list(params.values())[0]) + '"'
-        # job time
-        command += ' -W ' + time
-        # memory per cpu
-        command += ' -R "rusage[mem=' + mem
-        if gpu is None:
-            command += ']"'
-        elif gpu is not None:
-            command += ', ngpus_excl_p=1]"'
-            if gpu == 1:
-                command += ' -R "select[gpu_model0==GeForceGTX1080Ti]"'
-            elif gpu == 2:
-                command += ' -R "select[gpu_model0==GeForceRTX2080Ti]"'
-            else:
-                command += ' -R "select[gpu_mtotal0>=10240]"'  # GPU memory more then 10GB
+            # use 4 cpus
+            command += 'bsub -n ' + n_cpus
+            command += ' -J "' + algo + '-' + env + '-' + exp + ':' + str(list(params.values())[0]) + '"'
+            # job time
+            command += ' -W ' + time
+            # memory per cpu
+            command += ' -R "rusage[mem=' + mem
+            if gpu is None:
+                command += ']"'
+            elif gpu is not None:
+                command += ', ngpus_excl_p=1]"'
+                if gpu == 1:
+                    command += ' -R "select[gpu_model0==GeForceGTX1080Ti]"'
+                elif gpu == 2:
+                    command += ' -R "select[gpu_model0==GeForceRTX2080Ti]"'
+                else:
+                    pass
+                    # command += ' -R "select[gpu_mtotal0>=10240]"'  # GPU memory more then 10GB
 
-        command += ' "python ' + str(python_file_path)
-        for par in params:
-            command += ' ' + '--' + par + ' ' + str(params[par])
-        command += '"'
+            command += ' "python ' + str(python_file_path)
+            for par in params:
+                command += ' ' + '--' + par + ' ' + str(params[par])
+            command += '"'
 
-        print(command)
-        os.system(command)
+            print(command)
+            os.system(command)
 
 
 submit_job()
