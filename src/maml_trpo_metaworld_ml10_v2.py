@@ -15,7 +15,7 @@ from garage.sampler import RaySampler
 from garage.torch.policies import GaussianMLPPolicy
 from garage.trainer import Trainer
 
-from algos.maml_trpo import MAMLTRPO
+from algos.maml_trpo_v2 import MAMLTRPO
 
 
 # yapf: enable
