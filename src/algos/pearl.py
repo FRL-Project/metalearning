@@ -272,7 +272,7 @@ class PEARL(MetaRLAlgorithm):
                 such as snapshotting and sampler control.
 
         """
-        for _ in trainer.step_epochs():
+        for current_epoch in trainer.step_epochs():
             epoch = trainer.step_itr / self._num_steps_per_epoch
 
             # obtain initial set of samples from all train tasks
@@ -312,7 +312,7 @@ class PEARL(MetaRLAlgorithm):
 
             # evaluate
             self._policy.reset_belief()
-            if _ % 25 == 0:  # evaluate only every 25th epoch
+            if current_epoch % 25 == 0:  # evaluate only every 25th epoch
                 logger.log('Evaluating...')
                 self._evaluator.evaluate(self)
 
