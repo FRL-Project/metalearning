@@ -20,9 +20,11 @@ from garage.trainer import Trainer
 from algos.maml_trpo_v2 import MAMLTRPO
 from experiment.custom_meta_evaluator import CustomMetaEvaluator
 
-
 # yapf: enable
-from helpers import out_dir_config
+from helpers import out_dir_config, environmentvariables
+
+# Init env. variables
+environmentvariables.initialize()
 
 
 @click.command()
@@ -33,7 +35,7 @@ from helpers import out_dir_config
 @click.option('--inner_lr', default=1e-4, type=float)
 @click.option('--outer_lr', default=1e-3, type=float)
 @click.option('--discount', default=0.99, type=float)
-@wrap_experiment(snapshot_mode='none', name_parameters='passed', log_dir=out_dir_config.get_out_dir(__file__, ''.join(sys.argv[1:])))
+@wrap_experiment(log_dir=out_dir_config.get_out_dir(__file__, ''.join(sys.argv[1:])), archive_launch_repo=False)
 def maml_trpo_metaworld_ml10(ctxt, seed, epochs, rollouts_per_task,
                              meta_batch_size,
                              inner_lr,
@@ -66,7 +68,7 @@ def maml_trpo_metaworld_ml10(ctxt, seed, epochs, rollouts_per_task,
     )
 
     policy = GaussianMLPPolicy(env_spec=env.spec,
-                               hidden_sizes=(256, 256),
+                               hidden_sizes=(128, 128),
                                hidden_nonlinearity=torch.tanh,
                                output_nonlinearity=torch.tanh,
                                min_std=0.5,
