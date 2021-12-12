@@ -7,7 +7,7 @@ import metaworld
 import torch
 from garage import wrap_experiment
 from garage.envs import MetaWorldSetTaskEnv
-from garage.experiment import (MetaEvaluator, MetaWorldTaskSampler,
+from garage.experiment import (MetaWorldTaskSampler,
                                SetTaskSampler)
 from garage.experiment.deterministic import set_seed
 from garage.np.baselines import LinearFeatureBaseline
@@ -16,6 +16,7 @@ from garage.torch.policies import GaussianMLPPolicy
 from garage.trainer import Trainer
 
 from algos.maml_trpo_v2 import MAMLTRPO
+from experiment.custom_meta_evaluator import CustomMetaEvaluator
 
 
 # yapf: enable
@@ -59,10 +60,9 @@ def maml_trpo_metaworld_ml10(ctxt, seed, epochs, rollouts_per_task,
         MetaWorldSetTaskEnv,
         env=MetaWorldSetTaskEnv(ml10, 'test'),
     )
-    num_test_envs = 5
 
     policy = GaussianMLPPolicy(env_spec=env.spec,
-                               hidden_sizes=(128, 128),
+                               hidden_sizes=(256, 256),
                                hidden_nonlinearity=torch.tanh,
                                output_nonlinearity=torch.tanh,
                                min_std=0.5,
@@ -70,10 +70,10 @@ def maml_trpo_metaworld_ml10(ctxt, seed, epochs, rollouts_per_task,
 
     value_function = LinearFeatureBaseline(env_spec=env.spec)
 
-    meta_evaluator = MetaEvaluator(test_task_sampler=test_sampler,
-                                   n_exploration_eps=rollouts_per_task,
-                                   n_test_tasks=num_test_envs * 2,
-                                   n_test_episodes=10)
+    meta_evaluator = CustomMetaEvaluator(test_task_sampler=test_sampler,
+                                         n_exploration_eps=rollouts_per_task,
+                                         n_test_tasks=None,
+                                         n_test_episodes=10)
 
     sampler = RaySampler(agents=policy,
                          envs=env,
@@ -98,6 +98,7 @@ def maml_trpo_metaworld_ml10(ctxt, seed, epochs, rollouts_per_task,
         policy_ent_coeff=5e-5,
         stop_entropy_gradient=True,
         center_adv=False,
+        evaluate_every_n_epochs=10,
     )
 
     trainer.setup(algo, env)

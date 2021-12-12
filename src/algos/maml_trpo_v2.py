@@ -3,7 +3,7 @@ import torch
 
 from garage import _Default
 from algos.vpg import VPG
-from algos.maml import MAML
+from algos.maml_v2 import MAML
 from garage.torch.optimizers import (ConjugateGradientOptimizer,
                                      OptimizerWrapper)
 
